@@ -8,10 +8,12 @@ export default new Vuex.Store({
   state: {
     menu: [],
     orderInfo: {},
-    uuid: "",
     user: {},
     orders: [],
     delivery: true,
+    userName: "",
+    email: "",
+    password: "",
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
@@ -27,15 +29,8 @@ export default new Vuex.Store({
     emptyCart(state) {
       state.cart = [];
     },
-    setUuid: (state, uuid) => (state.uuid = uuid),
-    saveUser(state, user) {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ fullName: user.fullName, userEmail: user.userEmail })
-      );
-      state.user = user;
-    },
     setOrders: (state, data) => (state.orders = data),
+    setUser: (state, data) => (state.user = data),
   },
   actions: {
     async fetchMenu({ commit }) {
@@ -44,13 +39,40 @@ export default new Vuex.Store({
     },
     async postOrder({ commit, state }) {
       const body = {
-        userId: state.uuid,
         pizzas: state.cart,
         delivery: state.delivery,
       };
       const response = await axios.post("http://localhost:5000/orders", body);
       commit("setOrder", response.data);
       commit("emptyCart");
+    },
+    async createUser({ commit, state }) {
+      const body = {
+        userName: state.userName,
+        email: state.email,
+        password: state.password,
+      };
+      const response = await axios.post("http://localhost:5000/users", body);
+      if (response.error) {
+        console.log(response.error);
+      } else {
+        commit("setUser", response.data);
+      }
+    },
+    async logInUser({ commit, state }) {
+      const body = {
+        email: state.email,
+        password: state.password,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/users/logIn",
+        body
+      );
+      if (response.error) {
+        console.log(response.error);
+      } else {
+        commit("setUser", response.data);
+      }
     },
     //alla orders för en user
     async fetchOrders({ commit, state }) {

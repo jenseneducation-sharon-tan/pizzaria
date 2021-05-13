@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/menu", menuRouter);
 app.use("/orders", ordersRouter);
-app.use("/users", ordersRouter);
+app.use("/users", usersRouter);
 
 app.use(bodyParser.json());
 app.listen(5000, () => {

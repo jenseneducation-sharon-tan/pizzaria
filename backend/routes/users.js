@@ -14,11 +14,7 @@ router.post("/", (req, res) => {
   const users = db.get("users");
   const existingUser = users.find({ email: userInfo.email }).value();
   if (existingUser) {
-    if (existingUser.password === userInfo.password) {
-      res.send(existingUser);
-    } else {
-      res.send({ error: "Wrong password" });
-    }
+    res.send({ error: "User exist" });
   } else {
     const newUser = {
       ...userInfo,
@@ -26,6 +22,21 @@ router.post("/", (req, res) => {
     };
     users.push(newUser).write();
     res.send(newUser);
+  }
+});
+
+router.post("/logIn", (req, res) => {
+  const userInfo = req.body;
+  const users = db.get("users");
+  const existingUser = users.find({ email: userInfo.email }).value();
+  if (existingUser) {
+    if (existingUser.password === userInfo.password) {
+      res.send(existingUser);
+    } else {
+      res.send({ error: "Wrong password" });
+    }
+  } else {
+    res.send({ error: "No user" });
   }
 });
 

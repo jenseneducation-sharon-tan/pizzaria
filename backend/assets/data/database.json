@@ -104,41 +104,16 @@
   ],
   "orders": [
     {
-      "id": 1,
-      "pizzas": [
-        1,
-        3,
-        5
-      ],
+      "orderNumber": 1,
+      "pizzas": [1, 3, 5],
       "delivery": true,
       "userId": "hejhej"
     },
     {
-      "id": 2,
-      "pizzas": [
-        3,
-        5
-      ],
+      "orderNumber": 2,
+      "pizzas": [3, 5],
       "delivery": false,
       "userId": "hejhej"
-    },
-    {
-      "userId": "hejhej",
-      "pizzas": [
-        1,
-        2,
-        3
-      ],
-      "delivery": true
-    },
-    {
-      "userId": "hejhej",
-      "pizzas": [
-        1,
-        2,
-        3
-      ],
-      "delivery": true
     }
   ],
   "users": [
