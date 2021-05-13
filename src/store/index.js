@@ -38,7 +38,7 @@ export default new Vuex.Store({
     setOrders: (state, data) => (state.orders = data),
   },
   actions: {
-    async fetchMenuItems({ commit }) {
+    async fetchMenu({ commit }) {
       const response = await axios.get("http://localhost:5000/menu");
       commit("setMenu", response.data);
     },
@@ -52,6 +52,7 @@ export default new Vuex.Store({
       commit("setOrder", response.data);
       commit("emptyCart");
     },
+    //alla orders för en user
     async fetchOrders({ commit, state }) {
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);

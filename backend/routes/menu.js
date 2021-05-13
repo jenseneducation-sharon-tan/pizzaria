@@ -10,6 +10,7 @@ const db = low(adapter);
 router.get("/", async (req, res) => {
   const menu = db.get("menu");
   console.log(menu);
+  res.json(menu.value());
 });
 router.get("/toppings", async (req, res) => {
   const toppings = db.get("toppings");
