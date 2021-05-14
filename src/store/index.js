@@ -7,6 +7,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     menu: [],
+    toppings: [],
+    cart: [],
+    toppingsCart: [],
     orderInfo: {},
     user: {},
     orders: [],
@@ -17,12 +20,14 @@ export default new Vuex.Store({
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
-    addItems: (state, id) =>
-      state.cart.push(state.menu.find((item) => item.id == id)),
+    addItems: (state, id) => state.cart.push(id),
     deleteItems(state, id) {
-      const item = state.cart.find((item2) => item2.id == id);
-      const index = state.cart.indexOf(item);
+      const index = state.cart.indexOf(id);
       state.cart.splice(index, 1);
+    },
+    setToppings: (state, toppings) => (state.toppings = toppings),
+    addToppings: (state, id) => {
+      state.toppingsCart.push(id);
     },
     setOrder: (state, data) => (state.orderInfo = data),
     //tomt cart after man beställt
@@ -36,6 +41,10 @@ export default new Vuex.Store({
     async fetchMenu({ commit }) {
       const response = await axios.get("http://localhost:5000/menu");
       commit("setMenu", response.data);
+    },
+    async fetchToppings({ commit }) {
+      const response = await axios.get("http://localhost:5000/menu/toppings");
+      commit("setToppings", response.data);
     },
     async postOrder({ commit, state }) {
       const body = {
