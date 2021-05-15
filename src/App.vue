@@ -5,13 +5,17 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
+    <router-view name="nav" />
+    <router-view name="navAdmin" />
   </div>
 </template>
-<style>
+<style lang="scss">
+@import "@/style/main";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
