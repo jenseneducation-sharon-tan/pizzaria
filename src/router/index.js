@@ -65,7 +65,6 @@ const routes = [
     name: "Admin",
     components: {
       // default: Ädmin,
-      nav: Nav,
     },
   },
   {
