@@ -17,6 +17,6 @@ export default {
 h1 {
   font-size: $font-heading-xl;
   color: $dark-green;
-  margin-top: 40px;
+  padding-top: 40px;
 }
 </style>
