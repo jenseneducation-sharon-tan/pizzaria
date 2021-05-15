@@ -6,6 +6,7 @@
     </div>
     <router-view />
     <router-view name="nav" />
+    <router-view name="navAdmin" />
   </div>
 </template>
 <style lang="scss">

@@ -6,13 +6,8 @@
           v-for="nav in customerNavList"
           v-bind:key="nav.name"
           class="menu-list"
-          @click="selectMenu(nav)"
         >
-          <router-link
-            class="menu-list-link"
-            :to="`${nav.link}`"
-            routerLinkActive="router-link-active"
-          >
+          <router-link class="menu-list-link" :to="`${nav.link}`">
             <img
               class="nav-icon nav-icon_inactive"
               :src="require(`@/assets/${nav.icon}.svg`)"
@@ -29,7 +24,6 @@
         </li>
       </ul>
     </div>
-    <div class="admin-nav"></div>
   </nav>
 </template>
 
@@ -58,32 +52,17 @@ export default {
         icon: "bag",
       },
     ],
-    adminNavList: [
-      {
-        name: "Pizzor",
-        link: "/admin/pizza",
-      },
-      {
-        name: "Extra pålägg",
-        link: "/admin/customize",
-      },
-      {
-        name: "Beställningar",
-        link: "/admin/orders",
-      },
-    ],
   }),
-  methods: {
-    selectMenu() {
-      this.active = !this.active;
-      this.nav = !this.nav;
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/style/main";
+
+.customer-nav {
+  display: none;
+}
 
 @media screen and (max-width: $breakpoint-mobile) {
   .customer-nav {

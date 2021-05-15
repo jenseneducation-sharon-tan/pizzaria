@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Nav from "../components/Nav.vue";
+import NavAdmin from "../components/NavAdmin.vue";
 
 Vue.use(VueRouter);
 
@@ -72,7 +73,7 @@ const routes = [
     name: "AdminPizza",
     components: {
       // default: AdminPizza,
-      nav: Nav,
+      navAdmin: NavAdmin,
     },
   },
   {
@@ -80,7 +81,7 @@ const routes = [
     name: "AdminCustomize",
     components: {
       // default: AdminCustomize,
-      nav: Nav,
+      navAdmin: NavAdmin,
     },
   },
   {
@@ -88,7 +89,7 @@ const routes = [
     name: "AdminOrders",
     components: {
       // default: AdminOrders,
-      nav: Nav,
+      navAdmin: NavAdmin,
     },
   },
 ];
