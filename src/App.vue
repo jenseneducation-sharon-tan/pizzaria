@@ -1,10 +1,39 @@
 <template>
   <div id="app">
-    <router-view />
-    <router-view name="nav" />
-    <router-view name="navAdmin" />
+    <router-view v-show="thisIsMobile" />
+    <router-view v-show="thisIsMobile" name="nav" />
+    <router-view v-show="thisIsMobile" name="navAdmin" />
+    <div class="is-not-mobile" v-show="!thisIsMobile">
+      <p class="emoji">&#x1f630;</p>
+      <br />
+      <p>Denna app är bara för mobil ...</p>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    thisIsMobile: false,
+  }),
+  created() {
+    window.addEventListener("resize", this.isMobile);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.isMobile);
+  },
+  methods: {
+    isMobile() {
+      if (document.documentElement.clientWidth <= 425) {
+        this.thisIsMobile = true;
+      } else {
+        this.thisIsMobile = false;
+      }
+    },
+  },
+};
+</script>
+
 <style lang="scss">
 @import "@/style/main";
 
@@ -13,7 +42,24 @@
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  // color: #2c3e50;
+
+  .is-not-mobile {
+    background-image: url("/assets/bg-1.jpg");
+    background-repeat: repeat;
+    height: 100vh;
+    overflow: auto;
+    color: $white;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    font-size: $font-heading-lg;
+
+    .emoji {
+      font-size: 80px;
+    }
+  }
 }
 
 #nav {
