@@ -8,7 +8,11 @@ export default new Vuex.Store({
   state: {
     menu: [],
     toppings: [],
-    cart: [],
+    cart: [
+      { itemId: 1, id: 1, title: "Margherita", price: 119, quantity: 2 },
+      { itemId: 2, id: 7, title: "Napolitana", price: 124, quantity: 1 },
+      { itemId: 3, id: 1, title: "Margherita", price: 119, quantity: 1 },
+    ],
     toppingsCart: [],
     orderInfo: {},
     user: {},
@@ -24,6 +28,17 @@ export default new Vuex.Store({
     deleteItems(state, id) {
       const index = state.cart.indexOf(id);
       state.cart.splice(index, 1);
+    },
+    addQuantity(state, itemId) {
+      let index = state.cart.findIndex((item) => item.itemId === itemId);
+      state.cart[index].quantity++;
+    },
+    removeQuantity(state, itemId) {
+      let index = state.cart.findIndex((item) => item.itemId === itemId);
+      state.cart[index].quantity--;
+      if (state.cart[index].quantity == 0) {
+        state.cart.splice(index, 1);
+      }
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
     addToppings: (state, id) => {
@@ -89,5 +104,17 @@ export default new Vuex.Store({
       commit("setOrders", res.data);
     },
   },
-  getters: {},
+  getters: {
+    total: (state) => {
+      if (state.cart.length > 0) {
+        state.orders.totalValue = 0;
+        state.cart.forEach((item) => {
+          state.orders.totalValue += item.price * item.quantity;
+        });
+        return state.orders.totalValue;
+      } else {
+        return 0;
+      }
+    },
+  },
 });
