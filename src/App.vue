@@ -1,35 +1,52 @@
 <template>
   <div id="app">
-    <router-view v-show="thisIsMobile" />
+    <router-view />
+    <router-view name="nav" />
+    <router-view name="navAdmin" />
+    <!-- <router-view v-show="thisIsMobile" />
     <router-view v-show="thisIsMobile" name="nav" />
-    <router-view v-show="thisIsMobile" name="navAdmin" />
-    <div class="is-not-mobile" v-show="!thisIsMobile">
+    <router-view v-show="thisIsTablet" name="navAdmin" /> -->
+    <!-- <div class="is-not-mobile" v-show="!thisIsMobile">
       <p class="emoji">&#x1f630;</p>
       <br />
       <p>Denna app är bara för mobil ...</p>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    thisIsMobile: false,
+    // thisIsMobile: false,
+    // thisIsTablet: false,
   }),
-  created() {
-    window.addEventListener("resize", this.isMobile);
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.isMobile);
-  },
+  // created() {
+  //   window.addEventListener("resize", this.isMobile);
+  //   window.addEventListener("resize", this.isTablet);
+  // },
+  // destroyed() {
+  //   window.removeEventListener("resize", this.isMobile);
+  //   window.removeEventListener("resize", this.isTablet);
+  // },
   methods: {
-    isMobile() {
-      if (document.documentElement.clientWidth <= 425) {
-        this.thisIsMobile = true;
-      } else {
-        this.thisIsMobile = false;
-      }
-    },
+    // isMobile() {
+    //   if (window.innerwidth || document.documentElement.clientWidth <= 425) {
+    //     this.thisIsMobile = true;
+    //   } else {
+    //     this.thisIsMobile = false;
+    //   }
+    // },
+    // isTablet() {
+    //   if (window.innerwidth || document.documentElement.clientWidth > 425) {
+    //     if (window.innerwidth || document.documentElement.clientWidth <= 1024) {
+    //       this.thisIsTablet = true;
+    //     } else {
+    //       this.thisIsTablet = false;
+    //     }
+    //   } else {
+    //     this.thisIsTablet = false;
+    //   }
+    // },
   },
 };
 </script>
