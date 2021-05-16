@@ -74,15 +74,20 @@
     </main>
     <p class="noItemText" v-else>Det är tomt i varukorgen</p>
 
+    <!-- Modal -->
     <modal class="modal" ref="cartModal">
       <template v-slot:header>
         <h1 class="modal-title">Extra pålägg</h1>
       </template>
       <template v-slot:body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc sed
-        </p>
+        <span>
+          Jag vill ha extra:
+        </span>
+        <ul>
+          <li v-for="topping in toppings" v-bind:key="topping.id">
+            {{ topping.title }}
+          </li>
+        </ul>
       </template>
       <template v-slot:footer>
         <div>
@@ -101,7 +106,9 @@ export default {
   components: {
     Modal,
   },
-  data: () => ({}),
+  data: () => ({
+    // toppings: [],
+  }),
   computed: {
     cart() {
       return this.$store.state.cart;
@@ -109,6 +116,12 @@ export default {
     totalAmount() {
       return this.$store.getters.total;
     },
+    toppings() {
+      return this.$store.state.toppings;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("fetchToppings");
   },
   methods: {
     addQuantity(id) {
@@ -117,13 +130,6 @@ export default {
     removeQuantity(id) {
       this.$store.commit("removeQuantity", id);
     },
-    // async checkOrder() {
-    //   if (this.$store.state.cart.length !== 0) {
-    //     this.$router.push({ path: "/orderStatus" });
-    //     await this.$store.dispatch("postOrder");
-    //     this.$store.dispatch("clearCart");
-    //   }
-    // }
   },
 };
 </script>
@@ -151,6 +157,10 @@ export default {
     .modal {
       .modal-title {
         font-size: $font-heading-lg;
+      }
+
+      ul {
+        list-style: none;
       }
 
       button {
