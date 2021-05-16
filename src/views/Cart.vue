@@ -25,6 +25,7 @@
                     class="customize-icon"
                     src="@/assets/customize.svg"
                     alt=""
+                    @click="$refs.cartModal.openModal()"
                   />
                   <span>{{ cartitem.title }}</span>
                 </div>
@@ -67,17 +68,39 @@
         </ul>
       </div>
 
-      <button>Logga in och gå till kassan</button>
+      <button class="cart-button">Logga in och gå till kassan</button>
       <p class="or">or</p>
       <a href="#/checkout">Gå till kassan som gäst</a>
     </main>
     <p class="noItemText" v-else>Det är tomt i varukorgen</p>
+
+    <modal class="modal" ref="cartModal">
+      <template v-slot:header>
+        <h1 class="modal-title">Extra pålägg</h1>
+      </template>
+      <template v-slot:body>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc sed
+        </p>
+      </template>
+      <template v-slot:footer>
+        <div>
+          <button @click="$refs.cartModal.closeModal()">Spara</button>
+        </div>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
+import Modal from "@/components/Modal";
+
 export default {
   name: "Cart",
+  components: {
+    Modal,
+  },
   data: () => ({}),
   computed: {
     cart() {
@@ -108,6 +131,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main";
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .cart {
   display: none;
 }
@@ -120,6 +147,21 @@ export default {
     padding: 38px 1rem;
     color: $dark-green;
     overflow: auto;
+
+    .modal {
+      .modal-title {
+        font-size: $font-heading-lg;
+      }
+
+      button {
+        @include common-button-mobile;
+        font-size: 28px;
+        padding: 10px 16px 8px;
+        background: $orange;
+        color: $white;
+        margin: 32px 0 12px;
+      }
+    }
 
     .noItemText {
       font-size: 1.5rem;
@@ -232,13 +274,12 @@ export default {
       }
     }
 
-    button {
+    .cart-button {
       @include common-button-mobile;
       font-size: 24px;
-      padding: 10px 16px 8px;
+      padding: 14px 16px 10px;
       background: $orange;
       color: $white;
-      border: none;
       margin: 32px 0 12px;
     }
 
