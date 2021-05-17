@@ -16,9 +16,15 @@ export default new Vuex.Store({
     userName: "",
     email: "",
     password: "",
+    newPizza: {},
+    newTopping: {},
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
+    //create new pizza
+    setNewPizza: (state, pizza) => (state.newPizza = pizza),
+    //create new topping
+    setNewTopping: (state, topping) => (state.newTopping = topping),
 
     //add toppings to one pizza
     addToppingsToPizza(state, item, topping) {
@@ -38,10 +44,12 @@ export default new Vuex.Store({
     setToppings: (state, toppings) => (state.toppings = toppings),
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
+
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
     },
+
     setUser: (state, data) => (state.user = data),
     addToCart(state, item) {
       if (state.cart.find((i) => i.id === item.id)) {
@@ -67,6 +75,71 @@ export default new Vuex.Store({
       const response = await axios.get("http://localhost:5000/menu/toppings");
       commit("setToppings", response.data);
     },
+    // for admin page
+    async createPizza({ commit, state }) {
+      let id = 0;
+      state.menu.forEach((pizza) => {
+        if (pizza.id >= id) {
+          id = pizza.id + 1;
+        }
+      });
+      const body = {
+        id: id,
+        ...state.newPizza,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/admin/createPizza",
+        body
+      );
+      commit("setMenu", response.data);
+    },
+    async createTopping({ commit, state }) {
+      let id = 0;
+      state.toppings.forEach((topping) => {
+        if (topping.id >= id) {
+          id = topping.id + 1;
+        }
+      });
+      const body = {
+        id: id,
+        ...state.newTopping,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/admin/createTopping",
+        body
+      );
+      commit("setToppings", response.data);
+    },
+    // remove pizza in admin page
+    async removePizza({ commit }, pizza) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/removePizza",
+        pizza
+      );
+      commit("setMenu", response.data);
+    },
+    async removeTopping({ commit }, topping) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/removeTopping",
+        topping
+      );
+      commit("setToppings", response.data);
+    },
+    async updatePizza({ commit }, pizza) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/updatePizza",
+        pizza
+      );
+      commit("setMenu", response.data);
+    },
+    async updateTopping({ commit }, topping) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/updateTopping",
+        topping
+      );
+      commit("setToppings", response.data);
+    },
+
     async postOrder({ commit, state }) {
       const body = {
         cart: state.cart,
