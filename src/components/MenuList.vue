@@ -22,7 +22,7 @@ export default {
   .menu-list {
     margin-top: 30px;
     li:last-child {
-      .menu-item {
+      .item-details {
         border: none;
       }
     }
