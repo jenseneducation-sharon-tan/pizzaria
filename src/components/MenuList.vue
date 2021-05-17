@@ -21,6 +21,7 @@ export default {
 @media screen and (max-width: $breakpoint-mobile) {
   .menu-list {
     margin-top: 30px;
+    color: $dark-green;
 
     li:last-child {
       .item-details {
