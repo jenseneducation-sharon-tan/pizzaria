@@ -35,6 +35,17 @@ export default new Vuex.Store({
     addToppingsToPizza(state, index, topping) {
       state.cart[index].toppings.push(topping);
     },
+    addQuantity(state, itemId) {
+      let index = state.cart.findIndex((item) => item.itemId === itemId);
+      state.cart[index].quantity++;
+    },
+    removeQuantity(state, itemId) {
+      let index = state.cart.findIndex((item) => item.itemId === itemId);
+      state.cart[index].quantity--;
+      if (state.cart[index].quantity == 0) {
+        state.cart.splice(index, 1);
+      }
+    },
     setToppings: (state, toppings) => (state.toppings = toppings),
     addToppings: (state, id) => {
       state.pizza.toppings.push(id);
@@ -50,6 +61,19 @@ export default new Vuex.Store({
       state.cart = [];
     },
     setUser: (state, data) => (state.user = data),
+	addToCart(state, item) {
+		if(state.cart.find(i => i.id === item.id)){
+			let index = state.cart.findIndex(i => i.id === item.id)
+			state.cart[index].quantity++
+		} else {
+			state.cart.push({
+				id: item.id,
+				title: item.title,
+				price: item.price,
+				quantity:1
+			})
+		}
+	}
   },
   actions: {
     async fetchMenu({ commit }) {
@@ -102,6 +126,21 @@ export default new Vuex.Store({
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);
     },
+	addItem(context, item) {
+		context.commit("addToCart", item)
+	}
   },
-  getters: {},
+  getters: {
+    total: (state) => {
+      if (state.cart.length > 0) {
+        state.orders.totalValue = 0;
+        state.cart.forEach((item) => {
+          state.orders.totalValue += item.price * item.quantity;
+        });
+        return state.orders.totalValue;
+      } else {
+        return 0;
+      }
+    },
+  },
 });

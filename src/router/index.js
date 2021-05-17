@@ -2,8 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
+import Cart from "../views/Cart.vue";
+import Admin from "../views/Admin.vue";
 import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
+import Menu from "../views/Menu.vue";
 
 Vue.use(VueRouter);
 
@@ -25,7 +28,7 @@ const routes = [
     path: "/menu",
     name: "Menu",
     components: {
-      // default: Menu,
+      default: Menu,
       nav: Nav,
     },
   },
@@ -33,7 +36,7 @@ const routes = [
     path: "/cart",
     name: "Cart",
     components: {
-      // default: Cart,
+      default: Cart,
       nav: Nav,
     },
   },
@@ -65,7 +68,7 @@ const routes = [
     path: "/admin",
     name: "Admin",
     components: {
-      // default: Ädmin,
+      default: Admin,
     },
   },
   {
