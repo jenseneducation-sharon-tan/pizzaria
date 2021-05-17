@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-item">
+  <div class="item-details">
     <img
       class="add-button"
       src="@/assets/add.svg"
@@ -38,12 +38,12 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main";
 
-.menu-item {
+.item-details {
   display: none;
 }
 
 @media screen and (max-width: $breakpoint-mobile) {
-  .menu-item {
+  .item-details {
     display: flex;
     border-bottom: $light-green solid 1px;
     margin: 10px 20px;
@@ -78,6 +78,7 @@ export default {
       .item-price {
         font-size: $font-text-sm;
         width: inherit;
+        margin-top: 3px;
       }
     }
   }

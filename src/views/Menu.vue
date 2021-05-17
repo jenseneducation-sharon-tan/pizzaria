@@ -1,20 +1,20 @@
 <template>
   <div class="menu">
     <img class="graphic-top" :src="require(`@/assets/graphic-top.svg`)" />
-    <h1>Menu</h1>
-    <MenuList />
+    <h1>Meny</h1>
+    <MenuList :menu="menu" />
     <img class="graphic-bottom" :src="require(`@/assets/graphic-bottom.svg`)" />
-    <CartItemButton />
+    <CartItemCounter />
   </div>
 </template>
 
 <script>
 import MenuList from "@/components/MenuList";
-import CartItemButton from "@/components/CartItemButton";
+import CartItemCounter from "@/components/CartItemCounter";
 
 export default {
   name: "Menu",
-  components: { MenuList, CartItemButton },
+  components: { MenuList, CartItemCounter },
 
   computed: {
     menu() {
@@ -30,8 +30,13 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main";
 
+.menu {
+  display: none;
+}
+
 @media screen and (max-width: $breakpoint-mobile) {
   .menu {
+    display: block;
     h1 {
       font-size: $font-heading-xl;
       color: $dark-green;

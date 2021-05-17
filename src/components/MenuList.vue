@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-list">
-    <li v-for="item in menu" :key="item.id" class="menu-items">
+    <li v-for="item in menu" :key="item.id" class="menu-item">
       <MenuItem :item="item" />
     </li>
   </ul>
@@ -11,12 +11,21 @@ import MenuItem from "@/components/MenuItem.vue";
 
 export default {
   components: { MenuItem },
-  computed: {
-    menu() {
-      return this.$store.state.menu;
-    },
-  },
+  props: ["menu"],
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/style/main";
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .menu-list {
+    margin-top: 30px;
+    li:last-child {
+      .menu-item {
+        border: none;
+      }
+    }
+  }
+}
+</style>
