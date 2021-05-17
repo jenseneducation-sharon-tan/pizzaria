@@ -30,7 +30,7 @@ export default {
       border-radius: 50%;
       border: none;
       position: fixed;
-      right: 15px;
+      right: 22px;
       bottom: 33px;
       width: 24px;
       height: 24px;
