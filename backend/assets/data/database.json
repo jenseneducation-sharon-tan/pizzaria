@@ -100,61 +100,16 @@
   "orders": [
     {
       "orderNumber": 1,
-      "cart": [
-        1,
-        3,
-        5
-      ],
+      "cart": [1, 3, 5],
       "delivery": true,
       "userId": "hejhej"
     },
     {
       "orderNumber": 2,
-      "cart": [
-        3,
-        5
-      ],
+      "cart": [3, 5],
       "delivery": false,
       "userId": "hejhej"
     }
   ],
-  "users": [
-    {
-      "id": "hejhej",
-      "name": "lijuan",
-      "email": "lijuan@hotmail.com",
-      "adress": "globen station",
-      "password": "hejhejhej"
-    },
-    {
-      "userName": "hahaha",
-      "email": "ha@ha.com",
-      "password": "haha",
-      "id": "3ceabc5b-ae9f-4b7a-b66d-3597bfcad235"
-    },
-    {
-      "userName": "ha",
-      "email": "ha",
-      "password": "ha",
-      "id": "a542ae56-a656-459a-9028-282b3f51bb38"
-    },
-    {
-      "userName": "Johan",
-      "email": "Johan",
-      "password": "Johan",
-      "id": "89a33dc1-774f-4fcc-97c3-c79363ebd7e5"
-    },
-    {
-      "userName": "Johan",
-      "email": "Johan@johan.com",
-      "password": "Johan",
-      "id": "9409faf2-fe31-4638-9c74-4506cebc04d8"
-    },
-    {
-      "userName": "Lijuan",
-      "email": "Lijuan@lijuan.com",
-      "password": "Lijuan",
-      "id": "180ad241-c476-41ef-b94d-0c1ca00ff751"
-    }
-  ]
+  "users": []
 }
