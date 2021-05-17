@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-list">
-    <li v-for="item in menu" :key="item.id" class="menu-items">
+    <li v-for="item in menu" :key="item.id" class="menu-item">
       <MenuItem :item="item" />
     </li>
   </ul>

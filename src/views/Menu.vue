@@ -30,8 +30,13 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main";
 
+.menu {
+  display: none;
+}
+
 @media screen and (max-width: $breakpoint-mobile) {
   .menu {
+    display: block;
     h1 {
       font-size: $font-heading-xl;
       color: $dark-green;
