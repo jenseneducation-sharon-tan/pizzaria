@@ -6,9 +6,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    pizza: {
-      toppings: [],
-    },
     menu: [],
     toppings: [],
     cart: [],
@@ -22,11 +19,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
-    //choose pizza
-    setPizzaId: (state, id) => (state.pizza.pizzaId = id),
+
     //add toppings to one pizza
-    addToppingsToPizza(state, index, topping) {
-      state.cart[index].toppings.push(topping);
+    addToppingsToPizza(state, item, topping) {
+      state.cart.find((i) => i.id === item.id).toppings.push(topping);
     },
     addQuantity(state, itemId) {
       let index = state.cart.findIndex((item) => item.itemId === itemId);
@@ -40,15 +36,8 @@ export default new Vuex.Store({
       }
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
-    addToppings: (state, id) => {
-      state.pizza.toppings.push(id);
-    },
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
-    // delete  pizza in cart
-    deleteItems(state, index) {
-      state.cart.splice(index, 1);
-    },
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
@@ -64,6 +53,7 @@ export default new Vuex.Store({
           title: item.title,
           price: item.price,
           quantity: 1,
+          toppings: [],
         });
       }
     },
