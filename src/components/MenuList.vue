@@ -19,9 +19,12 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-mobile) {
-  li:last-child {
-    .menu-item {
-      border: none;
+  .menu-list {
+    margin-top: 30px;
+    li:last-child {
+      .menu-item {
+        border: none;
+      }
     }
   }
 }
