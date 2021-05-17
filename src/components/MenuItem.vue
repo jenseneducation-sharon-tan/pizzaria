@@ -6,6 +6,7 @@
       alt="Add Item"
       height="36px"
       width="36px"
+      @click="addItem"
     />
     <div class="wrapper-row">
       <div class="wrapper-column">
@@ -25,6 +26,11 @@
 export default {
   props: {
     item: Object,
+  },
+  methods: {
+    addItem() {
+      this.$store.dispatch("addItem", this.item);
+    },
   },
 };
 </script>
