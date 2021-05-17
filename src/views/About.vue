@@ -49,6 +49,7 @@ export default {
 		text-align: center;
 		font-weight: normal;
       }
+
 .about-details{
 	color: $dark-green;
 	margin:24px;
@@ -56,7 +57,6 @@ export default {
 
 	.details {
 		font-size:$font-text-sm;
-		
 		text-align: left;
 	}
 	
@@ -72,13 +72,13 @@ export default {
 	}
 	
 }
+
 iframe{
 	width: 100%;
 	height: auto;
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 	margin-top: 20px;
-
-}    
+	}    
 }
 }
 </style>
