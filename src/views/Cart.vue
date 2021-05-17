@@ -25,7 +25,9 @@
                     class="customize-icon"
                     src="@/assets/customize.svg"
                     alt=""
-                    @click="$refs.cartModal.openModal()"
+                    @click="
+                      $refs.cartModal.openModal(), selectedPizza(cartitem)
+                    "
                   />
                   <span>{{ cartitem.title }}</span>
                 </div>
@@ -80,14 +82,29 @@
         <h1 class="modal-title">Extra pålägg</h1>
       </template>
       <template v-slot:body>
-        <span>
+        <div class="pizza-name-wrap">
+          <h2>{{ selectedPizzaInfo.title }}</h2>
+          <p>{{ selectedPizzaInfo.desc }}</p>
+        </div>
+        <span class="desc-text">
           Jag vill ha extra:
         </span>
-        <ul>
-          <li v-for="topping in toppings" v-bind:key="topping.id">
-            {{ topping.title }}
-          </li>
-        </ul>
+        <div class="topping-list">
+          <ul>
+            <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
+              <input v-if="index <= 3" type="checkbox" name="" id="" />
+              <span v-if="index <= 3">{{ topping.title }}</span>
+              <span v-if="index <= 3">{{ topping.price }}kr</span>
+            </li>
+          </ul>
+          <ul>
+            <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
+              <input v-if="index >= 4" type="checkbox" name="" id="" />
+              <span v-if="index >= 4">{{ topping.title }}</span>
+              <span v-if="index >= 4">{{ topping.price }}kr</span>
+            </li>
+          </ul>
+        </div>
       </template>
       <template v-slot:footer>
         <div>
@@ -107,7 +124,7 @@ export default {
     Modal,
   },
   data: () => ({
-    // toppings: [],
+    selectedPizzaInfo: {},
   }),
   computed: {
     cart() {
@@ -129,6 +146,9 @@ export default {
     },
     removeQuantity(id) {
       this.$store.commit("removeQuantity", id);
+    },
+    selectedPizza(pizza) {
+      this.selectedPizzaInfo = pizza;
     },
   },
 };
@@ -159,8 +179,51 @@ export default {
         font-size: $font-heading-lg;
       }
 
-      ul {
-        list-style: none;
+      .pizza-name-wrap {
+        width: 100%;
+        background: $white-green;
+        padding: 1.5rem 0;
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
+
+        h2 {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      .desc-text {
+        font-size: $font-text-xs;
+        margin-bottom: 1rem;
+      }
+
+      .topping-list {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        ul {
+          list-style: none;
+          text-align: left;
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          li {
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+          }
+
+          &:nth-of-type(1) {
+            padding-right: 1rem;
+          }
+
+          &:nth-of-type(2) {
+            border-left: 1px solid $dark-green;
+            padding-left: 1rem;
+          }
+        }
       }
 
       button {
@@ -169,7 +232,7 @@ export default {
         padding: 10px 16px 8px;
         background: $orange;
         color: $white;
-        margin: 32px 0 12px;
+        margin: 0.5rem 0 12px;
       }
     }
 
