@@ -6,6 +6,7 @@ import Cart from "../views/Cart.vue";
 import Admin from "../views/Admin.vue";
 import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
+import Menu from "../views/Menu.vue";
 
 Vue.use(VueRouter);
 
@@ -27,7 +28,7 @@ const routes = [
     path: "/menu",
     name: "Menu",
     components: {
-      // default: Menu,
+      default: Menu,
       nav: Nav,
     },
   },

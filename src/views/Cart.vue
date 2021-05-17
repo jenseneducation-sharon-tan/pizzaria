@@ -17,7 +17,7 @@
         </div>
         <hr />
         <ul>
-          <li v-for="cartitem in cart" v-bind:key="cartitem.itemId">
+          <li v-for="cartitem in cart" v-bind:key="cartitem.id">
             <div class="cartitem-wrap">
               <div class="title-price-wrap">
                 <div class="title-wrap">
@@ -38,7 +38,7 @@
                   <div class="quantity-wrap">
                     <div
                       class="add-quantity add-arrow-wrap"
-                      @click="addQuantity(cartitem.itemId)"
+                      @click="addQuantity(cartitem.id)"
                     >
                       <img
                         class="arrow-up__img"
@@ -49,7 +49,7 @@
                     <div class="item-quantity">{{ cartitem.quantity }}</div>
                     <div
                       class="remove-quantity remove-arrow-wrap"
-                      @click="removeQuantity(cartitem.itemId)"
+                      @click="removeQuantity(cartitem.id)"
                     >
                       <img
                         class="arrow-down__img"
@@ -112,17 +112,21 @@
         </div>
       </template>
     </modal>
+    <CartItemCounter />
   </div>
 </template>
 
 <script>
 import Modal from "@/components/Modal";
+import CartItemCounter from "@/components/CartItemCounter";
 
 export default {
   name: "Cart",
   components: {
     Modal,
+    CartItemCounter,
   },
+  props: ["id"],
   data: () => ({
     selectedPizzaInfo: {},
   }),

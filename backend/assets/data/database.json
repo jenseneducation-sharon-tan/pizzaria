@@ -100,13 +100,31 @@
   "orders": [
     {
       "orderNumber": 1,
-      "cart": [1, 3, 5],
+      "cart": [
+        {
+          "pizzaId": 3,
+          "toppings": [1, 2, 6]
+        },
+        {
+          "pizzaId": 5,
+          "toppings": []
+        }
+      ],
       "delivery": true,
       "userId": "hejhej"
     },
     {
       "orderNumber": 2,
-      "cart": [3, 5],
+      "cart": [
+        {
+          "pizzaId": 3,
+          "toppings": [1, 2, 6]
+        },
+        {
+          "pizzaId": 5,
+          "toppings": []
+        }
+      ],
       "delivery": false,
       "userId": "hejhej"
     }

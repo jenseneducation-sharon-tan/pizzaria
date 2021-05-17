@@ -47,9 +47,4 @@ router.get("/:userId", (req, res) => {
   res.send(user);
 });
 
-// router.get("/key", (req, res) => {
-//   const key = uuidv4(); //uuidv4();
-//   res.send(key);
-// });
-
 module.exports = router;
