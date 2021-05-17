@@ -7,6 +7,7 @@ import Admin from "../views/Admin.vue";
 import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
 import Menu from "../views/Menu.vue";
+import Profile from "../views/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -60,7 +61,7 @@ const routes = [
     path: "/profile",
     name: "Profile",
     components: {
-      // default: Profile,
+      default: Profile,
       nav: Nav,
     },
   },

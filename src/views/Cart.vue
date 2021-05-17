@@ -80,9 +80,7 @@
         <h1 class="modal-title">Extra pålägg</h1>
       </template>
       <template v-slot:body>
-        <span>
-          Jag vill ha extra:
-        </span>
+        <span> Jag vill ha extra: </span>
         <ul>
           <li v-for="topping in toppings" v-bind:key="topping.id">
             {{ topping.title }}

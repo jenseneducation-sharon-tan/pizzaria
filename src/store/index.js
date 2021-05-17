@@ -18,6 +18,7 @@ export default new Vuex.Store({
     password: "",
     newPizza: {},
     newTopping: {},
+    loginError: "",
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
@@ -31,7 +32,7 @@ export default new Vuex.Store({
       state.cart.find((i) => i.id === item.id).toppings.push(topping);
     },
     addQuantity(state, id) {
-		console.log(id)
+      console.log(id);
       let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity++;
     },
@@ -150,30 +151,24 @@ export default new Vuex.Store({
       commit("setOrder", response.data);
       commit("emptyCart");
     },
-    async createUser({ commit, state }) {
-      const body = {
-        userName: state.userName,
-        email: state.email,
-        password: state.password,
-      };
+    async createUser({ commit, state }, user) {
+      const body = user;
       const response = await axios.post("http://localhost:5000/users", body);
-      if (response.error) {
-        console.log(response.error);
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
       } else {
         commit("setUser", response.data);
       }
     },
-    async logInUser({ commit, state }) {
-      const body = {
-        email: state.email,
-        password: state.password,
-      };
+    async loginUser({ commit, state }, body) {
       const response = await axios.post(
         "http://localhost:5000/users/logIn",
         body
       );
-      if (response.error) {
-        console.log(response.error);
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
       } else {
         commit("setUser", response.data);
       }
@@ -199,12 +194,12 @@ export default new Vuex.Store({
         return 0;
       }
     },
-	numberOfCartItems: state => {
-		let numberOfItems = 0;
-		state.cart.forEach(item => {
-			numberOfItems += item.quantity;
-		});
-		return numberOfItems;
-	}
+    numberOfCartItems: (state) => {
+      let numberOfItems = 0;
+      state.cart.forEach((item) => {
+        numberOfItems += item.quantity;
+      });
+      return numberOfItems;
+    },
   },
 });
