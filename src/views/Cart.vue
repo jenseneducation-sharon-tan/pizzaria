@@ -84,7 +84,13 @@
       <template v-slot:body>
         <div class="pizza-name-wrap">
           <h2>{{ selectedPizzaInfo.title }}</h2>
-          <p>{{ selectedPizzaInfo.desc }}</p>
+          <ul>
+            <li v-for="menuitem in menu" v-bind:key="menuitem.id">
+              <p v-if="menuitem.id == selectedPizzaInfo.id">
+                {{ menuitem.desc }}
+              </p>
+            </li>
+          </ul>
         </div>
         <span class="desc-text">
           Jag vill ha extra:
@@ -140,6 +146,9 @@ export default {
     toppings() {
       return this.$store.state.toppings;
     },
+    menu() {
+      return this.$store.state.menu;
+    },
   },
   mounted() {
     this.$store.dispatch("fetchToppings");
@@ -177,6 +186,10 @@ export default {
     padding: 38px 1rem;
     color: $dark-green;
     overflow: auto;
+
+    ul {
+      list-style: none;
+    }
 
     .modal {
       .modal-title {
