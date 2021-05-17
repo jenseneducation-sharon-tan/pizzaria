@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
   const orderInfo = req.body;
   const orders = db.get("orders");
   orders.push(orderInfo).write();
-  res.send(orders);
+  res.send(orders.value());
 });
 
 router.get("/:userId", (req, res) => {
