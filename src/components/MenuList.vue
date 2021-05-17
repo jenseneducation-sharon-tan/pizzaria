@@ -1,9 +1,9 @@
 <template>
-  <div class="menu-list">
-    <div v-for="item in menu" :key="item.id" class="menu-items">
+  <ul class="menu-list">
+    <li v-for="item in menu" :key="item.id" class="menu-items">
       <MenuItem :item="item" />
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -19,8 +19,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.menu-list {
-  margin-top: 140px;
-}
-</style>
+<style lang="scss" scoped></style>
