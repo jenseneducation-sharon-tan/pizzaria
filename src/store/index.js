@@ -24,12 +24,13 @@ export default new Vuex.Store({
     addToppingsToPizza(state, item, topping) {
       state.cart.find((i) => i.id === item.id).toppings.push(topping);
     },
-    addQuantity(state, itemId) {
-      let index = state.cart.findIndex((item) => item.itemId === itemId);
+    addQuantity(state, id) {
+		console.log(id)
+      let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity++;
     },
-    removeQuantity(state, itemId) {
-      let index = state.cart.findIndex((item) => item.itemId === itemId);
+    removeQuantity(state, id) {
+      let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity--;
       if (state.cart[index].quantity == 0) {
         state.cart.splice(index, 1);
@@ -125,5 +126,12 @@ export default new Vuex.Store({
         return 0;
       }
     },
+	numberOfCartItems: state => {
+		let numberOfItems = 0;
+		state.cart.forEach(item => {
+			numberOfItems += item.quantity;
+		});
+		return numberOfItems;
+	}
   },
 });
