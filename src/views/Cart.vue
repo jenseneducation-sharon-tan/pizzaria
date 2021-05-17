@@ -98,15 +98,19 @@
         <div class="topping-list">
           <ul>
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
-              <input v-if="index <= 3" type="checkbox" name="" id="" />
-              <span v-if="index <= 3">{{ topping.title }}</span>
+              <div>
+                <input v-if="index <= 3" type="checkbox" name="" id="" />
+                <span v-if="index <= 3">{{ topping.title }}</span>
+              </div>
               <span v-if="index <= 3">{{ topping.price }}kr</span>
             </li>
           </ul>
           <ul>
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
-              <input v-if="index >= 4" type="checkbox" name="" id="" />
-              <span v-if="index >= 4">{{ topping.title }}</span>
+              <div>
+                <input v-if="index >= 4" type="checkbox" name="" id="" />
+                <span v-if="index >= 4">{{ topping.title }}</span>
+              </div>
               <span v-if="index >= 4">{{ topping.price }}kr</span>
             </li>
           </ul>
@@ -218,6 +222,7 @@ export default {
         justify-content: space-between;
         width: 100%;
         align-items: center;
+
         ul {
           list-style: none;
           text-align: left;
@@ -227,9 +232,17 @@ export default {
           justify-content: center;
 
           li {
-            margin: 0.5rem 0;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+
+            span {
+              margin: 0.5rem 0;
+            }
+
+            input {
+              margin-right: 0.4rem;
+            }
           }
 
           &:nth-of-type(1) {
