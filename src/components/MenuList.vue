@@ -11,12 +11,18 @@ import MenuItem from "@/components/MenuItem.vue";
 
 export default {
   components: { MenuItem },
-  computed: {
-    menu() {
-      return this.$store.state.menu;
-    },
-  },
+  props: ["menu"],
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/style/main";
+
+@media screen and (max-width: $breakpoint-mobile) {
+  li:last-child {
+    .menu-item {
+      border: none;
+    }
+  }
+}
+</style>

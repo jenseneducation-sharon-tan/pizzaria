@@ -8,7 +8,11 @@ export default new Vuex.Store({
   state: {
     menu: [],
     toppings: [],
-    cart: [],
+    cart: [
+      /* { itemId: 1, id: 1, title: "Margherita", price: 119, quantity: 2 },
+      { itemId: 2, id: 7, title: "Napolitana", price: 124, quantity: 1 },
+      { itemId: 3, id: 1, title: "Margherita", price: 119, quantity: 1 }, */
+    ],
     toppingsCart: [],
     orderInfo: {},
     user: {},
@@ -25,12 +29,13 @@ export default new Vuex.Store({
       const index = state.cart.indexOf(id);
       state.cart.splice(index, 1);
     },
-    addQuantity(state, itemId) {
-      let index = state.cart.findIndex((item) => item.itemId === itemId);
+    addQuantity(state, id) {
+		console.log(id)
+      let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity++;
     },
-    removeQuantity(state, itemId) {
-      let index = state.cart.findIndex((item) => item.itemId === itemId);
+    removeQuantity(state, id) {
+      let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity--;
       if (state.cart[index].quantity == 0) {
         state.cart.splice(index, 1);
@@ -128,5 +133,12 @@ export default new Vuex.Store({
         return 0;
       }
     },
+	numberOfCartItems: state => {
+		let numberOfItems = 0;
+		state.cart.forEach(item => {
+			numberOfItems += item.quantity;
+		});
+		return numberOfItems;
+	}
   },
 });
