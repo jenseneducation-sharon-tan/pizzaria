@@ -6,10 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    pizza: {
+      toppings: [],
+    },
     menu: [],
     toppings: [],
     cart: [],
-    toppingsCart: [],
     orderInfo: {},
     user: {},
     orders: [],
@@ -20,21 +22,33 @@ export default new Vuex.Store({
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
-    addItems: (state, id) => state.cart.push(id),
-    deleteItems(state, id) {
-      const index = state.cart.indexOf(id);
-      state.cart.splice(index, 1);
+    //choose pizza
+    setPizzaId: (state, id) => (state.pizza.pizzaId = id),
+    //add pizza and topings to cart
+    addTocart(state) {
+      state.cart.push(state.pizza);
+      state.pizza = {
+        toppings: [],
+      };
+    },
+    //add toppings to one pizza
+    addToppingsToPizza(state, index, topping) {
+      state.cart[index].toppings.push(topping);
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
     addToppings: (state, id) => {
-      state.toppingsCart.push(id);
+      state.pizza.toppings.push(id);
     },
     setOrder: (state, data) => (state.orderInfo = data),
+    setOrders: (state, data) => (state.orders = data),
+    // delete  pizza in cart
+    deleteItems(state, index) {
+      state.cart.splice(index, 1);
+    },
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
     },
-    setOrders: (state, data) => (state.orders = data),
     setUser: (state, data) => (state.user = data),
   },
   actions: {
@@ -48,7 +62,7 @@ export default new Vuex.Store({
     },
     async postOrder({ commit, state }) {
       const body = {
-        pizzas: state.cart,
+        cart: state.cart,
         delivery: state.delivery,
       };
       const response = await axios.post("http://localhost:5000/orders", body);
