@@ -8,11 +8,7 @@ export default new Vuex.Store({
   state: {
     menu: [],
     toppings: [],
-    cart: [
-      { itemId: 1, id: 1, title: "Margherita", price: 119, quantity: 2 },
-      { itemId: 2, id: 7, title: "Napolitana", price: 124, quantity: 1 },
-      { itemId: 3, id: 1, title: "Margherita", price: 119, quantity: 1 },
-    ],
+    cart: [],
     toppingsCart: [],
     orderInfo: {},
     user: {},
@@ -51,6 +47,19 @@ export default new Vuex.Store({
     },
     setOrders: (state, data) => (state.orders = data),
     setUser: (state, data) => (state.user = data),
+	addToCart(state, item) {
+		if(state.cart.find(i => i.id === item.id)){
+			let index = state.cart.findIndex(i => i.id === item.id)
+			state.cart[index].quantity++
+		} else {
+			state.cart.push({
+				id: item.id,
+				title: item.title,
+				price: item.price,
+				quantity:1
+			})
+		}
+	}
   },
   actions: {
     async fetchMenu({ commit }) {
@@ -103,6 +112,9 @@ export default new Vuex.Store({
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);
     },
+	addItem(context, item) {
+		context.commit("addToCart", item)
+	}
   },
   getters: {
     total: (state) => {
