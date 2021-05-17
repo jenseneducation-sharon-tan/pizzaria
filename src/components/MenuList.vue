@@ -21,11 +21,10 @@ export default {
 @media screen and (max-width: $breakpoint-mobile) {
   .menu-list {
     margin-top: 30px;
-    .menu-item {
-      li:last-child {
-        .item-details {
-          border: none;
-        }
+
+    li:last-child {
+      .item-details {
+        border: none;
       }
     }
   }
