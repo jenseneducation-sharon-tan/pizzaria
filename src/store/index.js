@@ -8,12 +8,7 @@ export default new Vuex.Store({
   state: {
     menu: [],
     toppings: [],
-    cart: [
-      /* { itemId: 1, id: 1, title: "Margherita", price: 119, quantity: 2 },
-      { itemId: 2, id: 7, title: "Napolitana", price: 124, quantity: 1 },
-      { itemId: 3, id: 1, title: "Margherita", price: 119, quantity: 1 }, */
-    ],
-    toppingsCart: [],
+    cart: [],
     orderInfo: {},
     user: {},
     orders: [],
@@ -24,10 +19,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
-    addItems: (state, id) => state.cart.push(id),
-    deleteItems(state, id) {
-      const index = state.cart.indexOf(id);
-      state.cart.splice(index, 1);
+
+    //add toppings to one pizza
+    addToppingsToPizza(state, item, topping) {
+      state.cart.find((i) => i.id === item.id).toppings.push(topping);
     },
     addQuantity(state, id) {
 		console.log(id)
@@ -42,29 +37,27 @@ export default new Vuex.Store({
       }
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
-    addToppings: (state, id) => {
-      state.toppingsCart.push(id);
-    },
     setOrder: (state, data) => (state.orderInfo = data),
+    setOrders: (state, data) => (state.orders = data),
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
     },
-    setOrders: (state, data) => (state.orders = data),
     setUser: (state, data) => (state.user = data),
-	addToCart(state, item) {
-		if(state.cart.find(i => i.id === item.id)){
-			let index = state.cart.findIndex(i => i.id === item.id)
-			state.cart[index].quantity++
-		} else {
-			state.cart.push({
-				id: item.id,
-				title: item.title,
-				price: item.price,
-				quantity:1
-			})
-		}
-	}
+    addToCart(state, item) {
+      if (state.cart.find((i) => i.id === item.id)) {
+        let index = state.cart.findIndex((i) => i.id === item.id);
+        state.cart[index].quantity++;
+      } else {
+        state.cart.push({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          quantity: 1,
+          toppings: [],
+        });
+      }
+    },
   },
   actions: {
     async fetchMenu({ commit }) {
@@ -77,7 +70,7 @@ export default new Vuex.Store({
     },
     async postOrder({ commit, state }) {
       const body = {
-        pizzas: state.cart,
+        cart: state.cart,
         delivery: state.delivery,
       };
       const response = await axios.post("http://localhost:5000/orders", body);
@@ -117,9 +110,9 @@ export default new Vuex.Store({
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);
     },
-	addItem(context, item) {
-		context.commit("addToCart", item)
-	}
+    addItem(context, item) {
+      context.commit("addToCart", item);
+    },
   },
   getters: {
     total: (state) => {
