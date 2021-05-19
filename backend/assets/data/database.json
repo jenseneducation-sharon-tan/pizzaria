@@ -100,16 +100,42 @@
   "orders": [
     {
       "orderNumber": 1,
-      "cart": [1, 3, 5],
+      "cart": [
+        1,
+        3,
+        5
+      ],
       "delivery": true,
       "userId": "hejhej"
     },
     {
       "orderNumber": 2,
-      "cart": [3, 5],
+      "cart": [
+        3,
+        5
+      ],
       "delivery": false,
       "userId": "hejhej"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "userName": "li",
+      "email": "li",
+      "password": "li",
+      "id": "c1149733-8c09-42f9-8e8b-2487becec1b0"
+    },
+    {
+      "userName": "",
+      "email": "",
+      "password": "",
+      "id": "849b3b02-6be1-401b-8016-43eae8a20128"
+    },
+    {
+      "userName": "i",
+      "email": "i",
+      "password": "i",
+      "id": "bc37a7b4-4664-4877-8328-a4b84032b991"
+    }
+  ]
 }

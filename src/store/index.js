@@ -162,6 +162,19 @@ export default new Vuex.Store({
         commit("setUser", response.data);
       }
     },
+    async updateUser({ commit, state }, user) {
+      const body = user;
+      const response = await axios.post(
+        "http://localhost:5000/users/update",
+        body
+      );
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
+      } else {
+        commit("setUser", response.data);
+      }
+    },
     async loginUser({ commit, state }, body) {
       const response = await axios.post(
         "http://localhost:5000/users/logIn",

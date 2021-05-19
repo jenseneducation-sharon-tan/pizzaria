@@ -56,7 +56,7 @@ h1 {
     background-color: $white-green;
     border: 1px solid $white-green;
     color: $orange;
-    font-size: $font-text-xs;
+    font-size: $font-text-md;
     height: 44px;
     border-radius: 5px;
     margin-bottom: 5px;
