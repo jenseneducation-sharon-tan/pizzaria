@@ -144,6 +144,7 @@ export default new Vuex.Store({
 
     async postOrder({ commit, state }) {
       const body = {
+        userId: state.user && state.user.id,
         cart: state.cart,
         delivery: state.delivery,
       };
