@@ -144,6 +144,7 @@ export default new Vuex.Store({
 
     async postOrder({ commit, state }) {
       const body = {
+        userId: state.user && state.user.id,
         cart: state.cart,
         delivery: state.delivery,
       };
@@ -154,6 +155,19 @@ export default new Vuex.Store({
     async createUser({ commit, state }, user) {
       const body = user;
       const response = await axios.post("http://localhost:5000/users", body);
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
+      } else {
+        commit("setUser", response.data);
+      }
+    },
+    async updateUser({ commit, state }, user) {
+      const body = user;
+      const response = await axios.post(
+        "http://localhost:5000/users/update",
+        body
+      );
       if (response.data.error) {
         console.log(response.data.error);
         state.loginError = response.data.error;
