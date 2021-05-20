@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
 import Admin from "../views/Admin.vue";
+import AdminPizza from "../views/AdminPizza.vue";
 import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
 import Menu from "../views/Menu.vue";
@@ -76,7 +77,7 @@ const routes = [
     path: "/admin/pizza",
     name: "AdminPizza",
     components: {
-      // default: AdminPizza,
+    default: AdminPizza,
       navAdmin: NavAdmin,
     },
   },
