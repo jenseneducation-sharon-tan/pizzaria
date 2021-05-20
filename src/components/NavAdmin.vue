@@ -47,7 +47,7 @@ export default {
     box-shadow: 0px -4px 5px 0px rgba(0, 0, 0, 0.199);
     height: 70px;
     width: 100%;
-    position: absolute;
+    //position: absolute;
     bottom: 0px;
     display: flex;
     flex-direction: column;

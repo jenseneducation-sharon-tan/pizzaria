@@ -18,6 +18,7 @@ export default new Vuex.Store({
     password: "",
     newPizza: {},
     newTopping: {},
+    loginError: "",
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
@@ -143,6 +144,7 @@ export default new Vuex.Store({
 
     async postOrder({ commit, state }) {
       const body = {
+        userId: state.user && state.user.id,
         cart: state.cart,
         delivery: state.delivery,
       };
@@ -150,30 +152,37 @@ export default new Vuex.Store({
       commit("setOrder", response.data);
       commit("emptyCart");
     },
-    async createUser({ commit, state }) {
-      const body = {
-        userName: state.userName,
-        email: state.email,
-        password: state.password,
-      };
+    async createUser({ commit, state }, user) {
+      const body = user;
       const response = await axios.post("http://localhost:5000/users", body);
-      if (response.error) {
-        console.log(response.error);
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
       } else {
         commit("setUser", response.data);
       }
     },
-    async logInUser({ commit, state }) {
-      const body = {
-        email: state.email,
-        password: state.password,
-      };
+    async updateUser({ commit, state }, user) {
+      const body = user;
+      const response = await axios.post(
+        "http://localhost:5000/users/update",
+        body
+      );
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
+      } else {
+        commit("setUser", response.data);
+      }
+    },
+    async loginUser({ commit, state }, body) {
       const response = await axios.post(
         "http://localhost:5000/users/logIn",
         body
       );
-      if (response.error) {
-        console.log(response.error);
+      if (response.data.error) {
+        console.log(response.data.error);
+        state.loginError = response.data.error;
       } else {
         commit("setUser", response.data);
       }
