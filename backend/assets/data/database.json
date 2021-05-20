@@ -100,16 +100,36 @@
   "orders": [
     {
       "orderNumber": 1,
-      "cart": [1, 3, 5],
+      "cart": [
+        1,
+        3,
+        5
+      ],
       "delivery": true,
       "userId": "hejhej"
     },
     {
       "orderNumber": 2,
-      "cart": [3, 5],
+      "cart": [
+        3,
+        5
+      ],
       "delivery": false,
       "userId": "hejhej"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "userName": "",
+      "email": "",
+      "password": "",
+      "id": "2ff63e0b-9ad1-48de-b6b3-b0326ef37973"
+    },
+    {
+      "userName": "r",
+      "email": "r",
+      "password": "b",
+      "id": "240f8eea-4657-49bb-a69e-ba526d30356d"
+    }
+  ]
 }
