@@ -25,6 +25,14 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/update", (req, res) => {
+  const userInfo = req.body;
+  const users = db.get("users");
+  const existingUser = users.find({ id: userInfo.id });
+  existingUser.assign({ ...existingUser, ...userInfo }).write();
+  res.send(userInfo);
+});
+
 router.post("/logIn", (req, res) => {
   const userInfo = req.body;
   const users = db.get("users");
