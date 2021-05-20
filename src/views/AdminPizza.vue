@@ -6,7 +6,7 @@
 	<h1>Pizzor</h1>
 	<div class="pizza-details">
 		<div class="create-pizza">
-			<img class="add-button" src="@/assets/add.svg" alt=""/>
+			<img class="add-button" src="@/assets/add-orange.svg" alt=""/>
 				<span>Skapa ny pizza</span>
 		</div>
 	<!-- <div class="heading">
@@ -81,6 +81,7 @@ export default {
 			width: 100%;
 			height: auto;
 			padding: 1.5rem 1rem;
+			margin-top: 35px;
 
 			.create-pizza{
 				display:flex;
