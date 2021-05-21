@@ -5,18 +5,16 @@
       <Regist v-else @changeLogin="changeLogin" />
     </div>
     <div class="Profile-history" v-else><OrderHistory /></div>
-    <CartItemCounter />
   </div>
 </template>
 <script>
 import LogIn from "@/components/LogIn";
 import Regist from "@/components/Regist";
 import OrderHistory from "@/components/OrderHistory";
-import CartItemCounter from "@/components/CartItemCounter";
 
 export default {
   name: "Profile",
-  components: { LogIn, Regist, OrderHistory, CartItemCounter },
+  components: { LogIn, Regist, OrderHistory },
   data: () => ({
     logIn: false,
   }),

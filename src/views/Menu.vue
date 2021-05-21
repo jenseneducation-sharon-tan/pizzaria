@@ -4,17 +4,15 @@
     <h1>Meny</h1>
     <MenuList :menu="menu" />
     <img class="graphic-bottom" src="@/assets/graphic-bottom.svg" />
-    <CartItemCounter />
   </div>
 </template>
 
 <script>
 import MenuList from "@/components/MenuList";
-import CartItemCounter from "@/components/CartItemCounter";
 
 export default {
   name: "Menu",
-  components: { MenuList, CartItemCounter },
+  components: { MenuList },
 
   computed: {
     menu() {
