@@ -4,9 +4,9 @@
     <div class="users">
       <label for="email">Epost</label>
       <input name="name" type="text" v-model="email" />
-      <label for="password">Lösendord</label>
+      <label for="password">Lösenord</label>
       <input name="password" type="text" v-model="password" />
-      <span v-if="error" id="password-worng">Ojojoj! fel lösendord </span>
+      <span v-if="error" id="password-worng">Ojojoj! fel lösenord </span>
       <button class="saveUser" @click="loginUser()">Logga in</button>
     </div>
     <div class="user-text">
@@ -24,7 +24,7 @@ export default {
     password: "",
   }),
   computed: {
-    error: function () {
+    error: function() {
       return this.$store.state.loginError;
     },
   },

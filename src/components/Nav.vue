@@ -24,11 +24,16 @@
         </li>
       </ul>
     </div>
+    <CartItemCounter />
   </nav>
 </template>
 
 <script>
+import CartItemCounter from "@/components/CartItemCounter";
 export default {
+  components: {
+    CartItemCounter,
+  },
   data: () => ({
     customerNavList: [
       {

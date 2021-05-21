@@ -8,11 +8,6 @@
 <script>
 export default {
   name: "CartItemCounter",
-  data() {
-    return {
-      show: false,
-    };
-  },
   computed: {
     numberOfCartItems() {
       return this.$store.getters.numberOfCartItems;
@@ -40,10 +35,6 @@ export default {
         color: $white;
         display: block;
         margin-top: 2px;
-      }
-
-      .no-show {
-        display: none;
       }
     }
   }
