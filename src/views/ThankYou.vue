@@ -1,5 +1,8 @@
 <template>
   <div class="confirm-order">
+    <transition name="fade">
+      <LoadingScreen v-if="isLoading" />
+    </transition>
     <div class="order-wrapper" v-if="order.eta">
       <p>Tack för din beställning</p>
       <p>Order ID : {{ order.orderNr }}</p>
@@ -20,7 +23,20 @@
 </template>
 
 <script>
+import LoadingScreen from "@/components/LoadingScreen";
 export default {
+  name: "ThankYou",
+  data() {
+    return {
+      isLoading: true,
+    };
+  },
+  components: { LoadingScreen },
+  created() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
+  },
   computed: {
     order() {
       return this.$store.state.orderInfo;
@@ -44,9 +60,15 @@ export default {
     background-color: $dark-green;
     height: 100vh;
     color: $white;
+
+    .fade-leave-active {
+      transition: all 1s ease-in-out;
+    }
+    .fade-leave-active {
+      opacity: 0;
+    }
     .order-wrapper {
       margin-top: 75px;
-      //justify-content: space-evenly;
 
       p:nth-child(1) {
         margin-bottom: 20px;
@@ -80,13 +102,14 @@ export default {
       .estimate-delivery {
         font-size: $font-text-lg;
       }
-    }
-    button {
-      @include common-button-mobile;
-      color: $dark-green;
-      background-color: $yellow;
-      margin-top: 30px;
-      width: 70%;
+
+      button {
+        @include common-button-mobile;
+        color: $dark-green;
+        background-color: $yellow;
+        margin-top: 30px;
+        width: 70%;
+      }
     }
   }
 }

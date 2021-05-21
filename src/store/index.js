@@ -192,6 +192,7 @@ export default new Vuex.Store({
     async fetchOrders({ commit, state }) {
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);
+	
     },
     addItem(context, item) {
       context.commit("addToCart", item);
