@@ -26,20 +26,18 @@
 import LoadingScreen from "@/components/LoadingScreen";
 export default {
   name: "ThankYou",
-  data() {
-    return {
-      isLoading: true,
-    };
-  },
   components: { LoadingScreen },
   created() {
     setTimeout(() => {
-      this.isLoading = false;
+      this.$store.state.isLoading = false;
     }, 1500);
   },
   computed: {
     order() {
       return this.$store.state.orderInfo;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
 };

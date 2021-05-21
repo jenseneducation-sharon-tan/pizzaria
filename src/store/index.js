@@ -10,6 +10,7 @@ export default new Vuex.Store({
     toppings: [],
     cart: [],
     orderInfo: {eta: 10, orderNr: 12343242343},
+	isLoading: true,
     user: {},
     orders: [],
     delivery: true,
