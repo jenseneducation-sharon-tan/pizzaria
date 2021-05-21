@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="loading">
     <div class="home-container">
       <img src="../assets/pizza.svg" alt="" />
       <div class="title">

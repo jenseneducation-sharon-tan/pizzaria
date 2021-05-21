@@ -8,6 +8,7 @@ import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
 import Menu from "../views/Menu.vue";
 import Profile from "../views/Profile.vue";
+import ThankYou from "../views/ThankYou.vue";
 
 Vue.use(VueRouter);
 
@@ -53,7 +54,7 @@ const routes = [
     path: "/thankyou",
     name: "Thankyou",
     components: {
-      // default: Thankyou,
+      default: ThankYou,
       nav: Nav,
     },
   },
