@@ -12,7 +12,9 @@
         Din beställning är klar om
       </p>
       <div class="estimate-delivery">ca {{ order.eta }} min</div>
-      <button>Stäng</button>
+      <router-link to="/menu">
+        <button>Stäng</button>
+      </router-link>
     </div>
   </div>
 </template>
