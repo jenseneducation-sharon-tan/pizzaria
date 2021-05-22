@@ -7,7 +7,7 @@
       <input name="name" type="text" v-model="userName" />
       <label for="email">Epost</label>
       <input name="name" type="text" v-model="email" />
-      <label for="password">Lösendord</label>
+      <label for="password">Lösenord</label>
       <input name="password" type="text" v-model="password" />
       <button class="saveUser" @click="createUser()">Registrera</button>
     </div>

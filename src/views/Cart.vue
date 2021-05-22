@@ -122,19 +122,16 @@
         </div>
       </template>
     </modal>
-    <CartItemCounter />
   </div>
 </template>
 
 <script>
 import Modal from "@/components/Modal";
-import CartItemCounter from "@/components/CartItemCounter";
 
 export default {
   name: "Cart",
   components: {
     Modal,
-    CartItemCounter,
   },
   props: ["id"],
   data: () => ({

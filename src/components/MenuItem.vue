@@ -13,7 +13,7 @@
         <div class="item-title">
           {{ item.title }}
         </div>
-        <div class="item-description">
+        <div class="item-ingredients">
           {{ item.desc }}
         </div>
       </div>
@@ -69,7 +69,7 @@ export default {
           margin-bottom: 5px;
         }
 
-        .item-description {
+        .item-ingredients {
           font-size: $font-base;
           margin-bottom: 20px;
         }
