@@ -16,54 +16,73 @@
           <span>{{ totalAmount }}kr</span>
         </div>
         <hr />
-        <ul>
-          <li v-for="cartitem in cart" v-bind:key="cartitem.id">
-            <div class="cartitem-wrap">
-              <div class="title-price-wrap">
-                <div class="title-wrap">
-                  <img
-                    class="customize-icon"
-                    src="@/assets/customize.svg"
-                    alt=""
-                    @click="
-                      $refs.cartModal.openModal(), selectedPizza(cartitem)
-                    "
-                  />
-                  <span>{{ cartitem.title }}</span>
-                </div>
 
-                <div class="price-wrap">
-                  <span class="price">{{ cartitem.price }}kr</span>
-                  <span class="×">×</span>
-                  <div class="quantity-wrap">
-                    <div
-                      class="add-quantity add-arrow-wrap"
-                      @click="addQuantity(cartitem.id)"
-                    >
-                      <img
-                        class="arrow-up__img"
-                        src="@/assets/arrow-up.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div class="item-quantity">{{ cartitem.quantity }}</div>
-                    <div
-                      class="remove-quantity remove-arrow-wrap"
-                      @click="removeQuantity(cartitem.id)"
-                    >
-                      <img
-                        class="arrow-down__img"
-                        src="@/assets/arrow-down.svg"
-                        alt=""
-                      />
-                    </div>
+        <ul>
+          <li
+            v-for="(cartitem, index) in cart"
+            v-bind:key="cartitem.cartItemId"
+          >
+            <div class="cartitem-container">
+              <div class="cartitem-wrap">
+                <div class="title-price-wrap">
+                  <div class="title-wrap">
+                    <img
+                      class="customize-icon"
+                      src="@/assets/customize.svg"
+                      alt=""
+                      @click="$refs.cartModal.openModal(), selectedPizza(index)"
+                    />
+                    <span>{{ cartitem.title }}</span>
                   </div>
+
+                  <div class="price-wrap">
+                    <span class="price">{{ cartitem.price }}kr</span>
+                  </div>
+                </div>
+                <!-- <span class="total-price"
+                >{{ cartitem.price * cartitem.quantity }}kr</span
+              > -->
+
+                <div class="topping-wrap">
+                  <ul>
+                    <hr v-if="cartitem.toppings.length" />
+                    <li
+                      v-for="topping in cartitem.toppings"
+                      v-bind:key="topping.id"
+                    >
+                      <span>+ Extra {{ topping.title }}</span>
+                      <span>{{ topping.price }}kr</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              <span class="total-price"
-                >{{ cartitem.price * cartitem.quantity }}kr</span
-              >
+              <div class="quantity-container">
+                <span class="×">×</span>
+                <div class="quantity-wrap">
+                  <div
+                    class="add-quantity add-arrow-wrap"
+                    @click="addQuantity(index)"
+                  >
+                    <img
+                      class="arrow-up__img"
+                      src="@/assets/arrow-up.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="item-quantity">{{ cartitem.quantity }}</div>
+                  <div
+                    class="remove-quantity remove-arrow-wrap"
+                    @click="removeQuantity(index)"
+                  >
+                    <img
+                      class="arrow-down__img"
+                      src="@/assets/arrow-down.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
             <hr />
           </li>
@@ -83,10 +102,10 @@
       </template>
       <template v-slot:body>
         <div class="pizza-name-wrap">
-          <h2>{{ selectedPizzaInfo.title }}</h2>
+          <h2>{{ cart[selectedPizzaIndex].title }}</h2>
           <ul>
             <li v-for="menuitem in menu" v-bind:key="menuitem.id">
-              <p v-if="menuitem.id == selectedPizzaInfo.id">
+              <p v-if="menuitem.id == cart[selectedPizzaIndex].id">
                 {{ menuitem.desc }}
               </p>
             </li>
@@ -99,8 +118,18 @@
           <ul>
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
               <div>
-                <input v-if="index <= 3" type="checkbox" name="" id="" />
-                <span v-if="index <= 3">{{ topping.title }}</span>
+                <input
+                  v-if="index <= 3"
+                  type="checkbox"
+                  name=""
+                  v-bind:id="index"
+                  :value="topping"
+                  v-model="checkedToppings"
+                />
+
+                <label v-bind:for="index">
+                  <span v-if="index <= 3">{{ topping.title }}</span>
+                </label>
               </div>
               <span v-if="index <= 3">{{ topping.price }}kr</span>
             </li>
@@ -108,8 +137,17 @@
           <ul>
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
               <div>
-                <input v-if="index >= 4" type="checkbox" name="" id="" />
-                <span v-if="index >= 4">{{ topping.title }}</span>
+                <input
+                  v-if="index >= 4"
+                  type="checkbox"
+                  name=""
+                  v-bind:id="index"
+                  :value="topping"
+                  v-model="checkedToppings"
+                />
+                <label v-bind:for="index">
+                  <span v-if="index >= 4">{{ topping.title }}</span>
+                </label>
               </div>
               <span v-if="index >= 4">{{ topping.price }}kr</span>
             </li>
@@ -118,7 +156,13 @@
       </template>
       <template v-slot:footer>
         <div>
-          <button @click="$refs.cartModal.closeModal()">Spara</button>
+          <button
+            @click="
+              $refs.cartModal.closeModal(), saveToppings(selectedPizzaIndex)
+            "
+          >
+            Spara
+          </button>
         </div>
       </template>
     </modal>
@@ -135,7 +179,8 @@ export default {
   },
   props: ["id"],
   data: () => ({
-    selectedPizzaInfo: {},
+    selectedPizzaIndex: 0,
+    checkedToppings: [],
   }),
   computed: {
     cart() {
@@ -155,14 +200,22 @@ export default {
     this.$store.dispatch("fetchToppings");
   },
   methods: {
-    addQuantity(id) {
-      this.$store.commit("addQuantity", id);
+    addQuantity(index) {
+      this.$store.commit("addQuantity", index);
     },
-    removeQuantity(id) {
-      this.$store.commit("removeQuantity", id);
+    removeQuantity(index) {
+      this.$store.commit("removeQuantity", index);
     },
-    selectedPizza(pizza) {
-      this.selectedPizzaInfo = pizza;
+    selectedPizza(index) {
+      this.selectedPizzaIndex = index;
+      this.checkedToppings = this.cart[index].toppings;
+    },
+    saveToppings(selectedPizzaIndex) {
+      let cartInfo = {
+        toppings: this.checkedToppings,
+        pizzaIndex: selectedPizzaIndex,
+      };
+      this.$store.commit("addToppingsToPizza", cartInfo);
     },
   },
 };
@@ -237,8 +290,50 @@ export default {
               margin: 0.5rem 0;
             }
 
-            input {
-              margin-right: 0.4rem;
+            input[type="checkbox"] {
+              display: none;
+            }
+
+            input[type="checkbox"] + label {
+              display: none;
+              cursor: pointer;
+              display: inline-block;
+              position: relative;
+              padding-left: 25px;
+              padding-right: 10px;
+            }
+
+            input[type="checkbox"] + label::before {
+              content: "";
+              position: absolute;
+              display: block;
+              box-sizing: border-box;
+              width: 20px;
+              height: 20px;
+              margin-top: -10px;
+              left: 0;
+              top: 50%;
+              border: 1px solid;
+              border-color: $dark-green;
+              background-color: $white;
+              border-radius: 50%;
+            }
+
+            /* チェックが入った時のレ点 */
+            input[type="checkbox"]:checked + label::after {
+              content: "";
+              position: absolute;
+              display: block;
+              box-sizing: border-box;
+              width: 18px;
+              height: 9px;
+              margin-top: -9px;
+              top: 50%;
+              left: 3px;
+              transform: rotate(-45deg);
+              border-bottom: 3px solid;
+              border-left: 3px solid;
+              border-color: $orange;
             }
           }
 
@@ -323,52 +418,76 @@ export default {
         list-style: none;
 
         li {
-          .cartitem-wrap {
+          .cartitem-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin: 8px 0;
-            width: 100%;
 
-            .title-price-wrap {
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              width: 75%;
+            .cartitem-wrap {
+              margin: 8px 1rem 8px 0;
+              width: 100%;
 
-              .title-wrap {
-                display: flex;
-                align-items: center;
-
-                .customize-icon {
-                  width: 30px;
-                  margin-right: 0.8rem;
-                }
-              }
-
-              .price-wrap {
+              .title-price-wrap {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                //   width: 75%;
+                width: 100%;
 
-                .price {
-                  margin-right: 0.2rem;
+                .title-wrap {
+                  display: flex;
+                  align-items: center;
+
+                  .customize-icon {
+                    width: 30px;
+                    margin-right: 0.8rem;
+                  }
                 }
 
-                .× {
-                  margin-right: 0.3rem;
-                  margin-top: -0.3rem;
-                }
-
-                img {
-                  width: 10px;
+                .price-wrap {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin: 0.5rem 0;
                 }
               }
             }
-          }
 
-          hr {
-            border: 1px solid $light-green;
+            hr {
+              border: 1px solid $light-green;
+            }
+
+            .topping-wrap {
+              ul {
+                hr {
+                  margin: 0.2rem 0 0.5rem;
+                  opacity: 0.3;
+                }
+                li {
+                  display: flex;
+                  justify-content: space-between;
+                  margin: 0.2rem 0;
+                }
+              }
+            }
+
+            .quantity-container {
+              display: flex;
+              align-items: center;
+              margin: 0.5rem 0;
+
+              .× {
+                margin-right: 1rem;
+                margin-top: -0.3rem;
+              }
+
+              img {
+                width: 10px;
+              }
+
+              .item-quantity {
+                font-size: 20px;
+              }
+            }
           }
         }
       }

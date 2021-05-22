@@ -9,8 +9,8 @@ export default new Vuex.Store({
     menu: [],
     toppings: [],
     cart: [],
-    orderInfo: {eta: 10, orderNr: 12343242343},
-	isLoading: true,
+    orderInfo: { eta: 10, orderNr: 12343242343 },
+    isLoading: true,
     user: {},
     orders: [],
     delivery: true,
@@ -29,15 +29,17 @@ export default new Vuex.Store({
     setNewTopping: (state, topping) => (state.newTopping = topping),
 
     //add toppings to one pizza
-    addToppingsToPizza(state, item, topping) {
-      state.cart.find((i) => i.id === item.id).toppings.push(topping);
+    addToppingsToPizza(state, cartInfo) {
+      state.cart[cartInfo.pizzaIndex].toppings = cartInfo.toppings;
+      // state.cart.find((i) => i.id === cartInfo.pizza.id).toppings =
+      //   cartInfo.toppings;
     },
-    addQuantity(state, id) {
-      let index = state.cart.findIndex((item) => item.id === id);
+    addQuantity(state, index) {
+      // let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity++;
     },
-    removeQuantity(state, id) {
-      let index = state.cart.findIndex((item) => item.id === id);
+    removeQuantity(state, index) {
+      // let index = state.cart.findIndex((item) => item.id === id);
       state.cart[index].quantity--;
       if (state.cart[index].quantity == 0) {
         state.cart.splice(index, 1);
@@ -54,27 +56,36 @@ export default new Vuex.Store({
 
     setUser: (state, data) => (state.user = data),
     addToCart(state, item) {
-      if (state.cart.find((i) => i.id === item.id)) {
-        let index = state.cart.findIndex((i) => i.id === item.id);
-        state.cart[index].quantity++;
-      } else {
-        state.cart.push({
-          id: item.id,
-          title: item.title,
-          price: item.price,
-          quantity: 1,
-          toppings: [],
-        });
-      }
+      state.cart.push({
+        cartItemId: state.cart.length ? state.cart.length + 1 : 1,
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        quantity: 1,
+        toppings: [],
+      });
     },
+    // addToCart(state, item) {
+    //   if (state.cart.find((i) => i.id === item.id)) {
+    //     let index = state.cart.findIndex((i) => i.id === item.id);
+    //     state.cart[index].quantity++;
+    //   } else {
+    //     state.cart.push({
+    //       id: item.id,
+    //       title: item.title,
+    //       price: item.price,
+    //       quantity: 1,
+    //       toppings: [],
+    //     });
+    //   }
+    // },
   },
   actions: {
     async fetchMenu({ commit }) {
-    const response = await axios.get("http://localhost:5000/menu");
-    commit("setMenu", response.data);
-
+      const response = await axios.get("http://localhost:5000/menu");
+      commit("setMenu", response.data);
     },
-	
+
     async fetchToppings({ commit }) {
       const response = await axios.get("http://localhost:5000/menu/toppings");
       commit("setToppings", response.data);
@@ -193,7 +204,6 @@ export default new Vuex.Store({
     async fetchOrders({ commit, state }) {
       const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
       commit("setOrders", res.data);
-	
     },
     addItem(context, item) {
       context.commit("addToCart", item);
@@ -205,6 +215,11 @@ export default new Vuex.Store({
         state.orders.totalValue = 0;
         state.cart.forEach((item) => {
           state.orders.totalValue += item.price * item.quantity;
+          if (item.toppings.length) {
+            item.toppings.forEach((topping) => {
+              state.orders.totalValue += topping.price * item.quantity;
+            });
+          }
         });
         return state.orders.totalValue;
       } else {
