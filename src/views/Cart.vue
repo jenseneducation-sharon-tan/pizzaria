@@ -91,7 +91,7 @@
 
       <button
         v-if="Object.keys(user).length"
-        class="cart-button"
+        class="cart-button direkt"
         @click="goToCheckout()"
       >
         Gå till kassan
@@ -449,52 +449,6 @@ export default {
             span {
               margin: 0.5rem 0;
             }
-
-            input[type="checkbox"] {
-              display: none;
-            }
-
-            input[type="checkbox"] + label {
-              display: none;
-              cursor: pointer;
-              display: inline-block;
-              position: relative;
-              padding-left: 25px;
-              padding-right: 10px;
-            }
-
-            input[type="checkbox"] + label::before {
-              content: "";
-              position: absolute;
-              display: block;
-              box-sizing: border-box;
-              width: 20px;
-              height: 20px;
-              margin-top: -10px;
-              left: 0;
-              top: 50%;
-              border: 1px solid;
-              border-color: $dark-green;
-              background-color: $white;
-              border-radius: 50%;
-            }
-
-            /* チェックが入った時のレ点 */
-            input[type="checkbox"]:checked + label::after {
-              content: "";
-              position: absolute;
-              display: block;
-              box-sizing: border-box;
-              width: 18px;
-              height: 9px;
-              margin-top: -9px;
-              top: 50%;
-              left: 3px;
-              transform: rotate(-45deg);
-              border-bottom: 3px solid;
-              border-left: 3px solid;
-              border-color: $orange;
-            }
           }
 
           &:nth-of-type(1) {
@@ -637,6 +591,10 @@ export default {
         list-style: none;
 
         li {
+          hr {
+            border: 1px solid $light-green;
+          }
+
           .cartitem-container {
             display: flex;
             align-items: center;
@@ -719,6 +677,10 @@ export default {
       background: $orange;
       color: $white;
       margin: 32px 0 12px;
+    }
+
+    .direkt {
+      margin: 32px 0 60px;
     }
 
     .or {

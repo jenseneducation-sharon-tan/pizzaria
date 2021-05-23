@@ -10,6 +10,7 @@ import NavAdmin from "../components/NavAdmin.vue";
 import Menu from "../views/Menu.vue";
 import Profile from "../views/Profile.vue";
 import ThankYou from "../views/ThankYou.vue";
+import Checkout from "../views/Checkout.vue";
 
 Vue.use(VueRouter);
 
@@ -47,7 +48,7 @@ const routes = [
     path: "/checkout",
     name: "Checkout",
     components: {
-      // default: Checkout,
+      default: Checkout,
       nav: Nav,
     },
   },
@@ -78,7 +79,7 @@ const routes = [
     path: "/admin/pizza",
     name: "AdminPizza",
     components: {
-    default: AdminPizza,
+      default: AdminPizza,
       navAdmin: NavAdmin,
     },
   },
