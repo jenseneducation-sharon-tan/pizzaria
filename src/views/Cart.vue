@@ -371,11 +371,11 @@ export default {
           email: this.email,
           password: this.password,
         });
-        this.$router.push("/checkout");
+        this.$router.push({ name: "Checkout" });
       }
     },
     goToCheckout() {
-      this.$router.push({ name: "checkout" });
+      this.$router.push({ name: "Checkout" });
     },
   },
 };
@@ -510,7 +510,7 @@ export default {
         }
 
         .notActive {
-          background: gray;
+          background: $gray;
         }
       }
       .user-text {
