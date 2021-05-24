@@ -1,5 +1,5 @@
 <template>
-  <div class="home" :class="{ fade: isActive }">
+  <div class="home">
     <div class="home-container">
       <img src="../assets/pizza.svg" alt="" />
       <div class="title">
@@ -20,9 +20,6 @@ export default {
   }),
   created() {
     setTimeout(() => {
-      this.isActive = true;
-    }, 2000);
-    setTimeout(() => {
       this.$router.push({ path: "/menu" });
     }, 3000);
   },
@@ -33,10 +30,6 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-mobile) {
-  .fade {
-    transition: all 1s ease-in-out;
-    opacity: 0;
-  }
   .home {
     background-image: url("../assets/bg-1.jpg");
     background-repeat: repeat y;
