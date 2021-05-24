@@ -27,9 +27,7 @@ export default {
   }),
   watch: {
     $route(to, from) {
-      if (from.path === "/" || to.path === "/menu") {
-        this.transitionName = "opacity";
-      } else if (from.path === "/menu" && to.path === "/cart") {
+      if (from.path === "/menu" && to.path === "/cart") {
         this.transitionName = "ltr";
       } else {
         this.transitionName = "opacity";
