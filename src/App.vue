@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <transition :name="transitionName">
+      <router-view />
+    </transition>
     <router-view name="nav" />
     <router-view name="navAdmin" />
     <!-- <router-view v-show="thisIsMobile" />
@@ -17,9 +19,27 @@
 <script>
 export default {
   data: () => ({
+    transitionName: "opacity",
+    //indexPage: 1,
+
     // thisIsMobile: false,
     // thisIsTablet: false,
   }),
+  watch: {
+    $route(to, from) {
+      if (from.path === "/" || to.path === "/menu") {
+        this.transitionName = "opacity";
+        console.log("opacity", from.name, to.name);
+      } else if (from.path === "/menu" && to.path === "/cart") {
+        this.transitionName = "ltr";
+        console.log("ltrO", from.name, to.name);
+      } else {
+        this.transitionName = "opacity";
+        console.log("opac", from.name, to.name);
+      }
+      //this.indexPage++;
+    },
+  },
   // created() {
   //   window.addEventListener("resize", this.isMobile);
   //   window.addEventListener("resize", this.isTablet);
@@ -76,6 +96,61 @@ export default {
     .emoji {
       font-size: 80px;
     }
+  }
+}
+
+/* LTR */
+.ltr-enter-active {
+  animation: entering-ltr 500ms;
+  //transform: translateX(-50%);
+}
+.ltr-leave-active {
+  animation: leaving-ltr 500ms;
+}
+
+@keyframes entering-ltr {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes leaving-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* OPACITY */
+.opacity-enter,
+.opacity-leave-to {
+  opacity: 0;
+}
+.opacity-enter-active {
+  animation: entering-opacity 250ms;
+}
+.opacity-leave-active {
+  animation: leaving-opacity 250ms;
+}
+
+@keyframes entering-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes leaving-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
