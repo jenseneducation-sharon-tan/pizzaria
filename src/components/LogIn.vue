@@ -7,7 +7,9 @@
       <label for="password">Lösenord</label>
       <input name="password" type="text" v-model="password" />
       <span v-if="error" id="password-worng">Ojojoj! fel lösenord </span>
-      <button class="saveUser" @click="loginUser()">Logga in</button>
+      <button class="saveUser" @click="loginUser(), $emit('checkLogin')">
+        Logga in
+      </button>
     </div>
     <div class="user-text">
       <p>Är du inte registrerad?</p>
