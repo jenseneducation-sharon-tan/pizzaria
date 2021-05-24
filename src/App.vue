@@ -29,13 +29,10 @@ export default {
     $route(to, from) {
       if (from.path === "/" || to.path === "/menu") {
         this.transitionName = "opacity";
-        console.log("opacity", from.name, to.name);
       } else if (from.path === "/menu" && to.path === "/cart") {
         this.transitionName = "ltr";
-        console.log("ltrO", from.name, to.name);
       } else {
         this.transitionName = "opacity";
-        console.log("opac", from.name, to.name);
       }
       //this.indexPage++;
     },
