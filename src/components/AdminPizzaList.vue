@@ -1,6 +1,6 @@
 <template>
-
-  <ul class="menu-list">
+<div class="pizza-list">
+  
 	<!-- <div class="heading">
 		<div class="name">
 			<p>Namn</p>
@@ -13,10 +13,12 @@
 		</div>
 		</div> -->
 		<hr>
+		<ul class="menu-list">
     <li v-for="item in menu" :key="item.id" class="menu-item">
       <AdminPizzaItem :item="item" />
     </li>
   </ul>
+</div>
 
 </template>
 
@@ -33,10 +35,26 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
-  .menu-list {
+.pizza-list{
+	display: flex;
+	justify-content: center;align-items: center;
+	width: 100%;
+}
+  ul {
     margin-top: 30px;
     color: $dark-green;
 	list-style-type: none;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	
+	li {
+		display: flex;
+		justify-content: center;
+		align-items: center;	
+	}
 	hr {
 		border: 1px solid $light-green;
 		margin:15px;
