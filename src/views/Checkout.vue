@@ -73,7 +73,7 @@
               checked="checked"
             />
 
-            <label v-bind:for="method">
+            <label @click="checkUser()" v-bind:for="method">
               <span>{{ method }}</span>
             </label>
           </li>
@@ -196,7 +196,10 @@
         </div>
       </div>
 
-      <button>
+      <button
+        :disabled="payIsDisabled"
+        :class="{ payIsDisabled: payIsDisabled }"
+      >
         Betala
       </button>
     </div>
@@ -217,6 +220,7 @@ export default {
     validYear: null,
     validMonth: null,
     cvc: null,
+    payIsDisabled: true,
   }),
   computed: {
     cart() {
@@ -230,6 +234,18 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+  },
+  mounted() {},
+  watch: {},
+  methods: {
+    checkUser() {
+      if (Object.keys(this.user).length) {
+        console.log(this.user);
+        this.name = this.user.userName;
+        this.adress = this.user.adress;
+        this.telefon = this.user.telefon;
+      }
     },
   },
 };
@@ -447,6 +463,10 @@ export default {
       background: $orange;
       color: $white;
       margin: 24px 0 12px;
+    }
+
+    .payIsDisabled {
+      background: $gray;
     }
   }
 }

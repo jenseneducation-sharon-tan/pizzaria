@@ -110,7 +110,7 @@
     </main>
     <p class="noItemText" v-else>Det är tomt i varukorgen</p>
 
-    <!-----------------------------Topping Modal Start-------------------------------------->
+    <!-----------------------------Topping Modal-------------------------------------->
     <modal class="modal" ref="cartModal">
       <template v-slot:header>
         <h1 class="modal-title">Extra pålägg</h1>
@@ -181,112 +181,41 @@
         </div>
       </template>
     </modal>
-    <!--------------------------------------Topping Modal End --------------------------------------->
 
-    <!---------------------------------------Login Modal Start--------------------------------------->
+    <!---------------------------------------Login / Register Modal--------------------------------------->
     <modal class="modal login-modal" ref="loginModal">
-      <template v-slot:header>
-        <h1 class="modal-title">Logga in</h1>
-      </template>
-
       <template v-slot:body>
-        <div class="users">
-          <label for="email">Epost</label>
-          <input name="name" type="text" v-model="email" />
-          <label for="password">Lösenord</label>
-          <input name="password" type="text" v-model="password" />
-          <span v-if="error && isError" class="password-worng"
-            >Ojojoj! fel lösenord
-          </span>
-          <!-- login button -->
-          <button
-            class="saveUser loginButton"
-            @click="loginUser(), $refs.cartModal.closeModal()"
-            :class="{ notActive: email == '' || password == '' }"
-            :disabled="isDisabled"
-          >
-            Logga in
-          </button>
-          <!-- login button end-->
-        </div>
-      </template>
-      <template v-slot:footer>
-        <div class="user-text">
-          <p>Är du inte registrerad?</p>
-          <span
-            @click="
-              $refs.loginModal.closeModal(), $refs.registerModal.openModal()
-            "
-            >Registrera</span
-          >
-        </div>
+        <LogIn
+          v-if="logIn"
+          @changeLogin="changeLogin"
+          @checkLogin="checkLogin"
+        />
+        <Regist v-else @changeLogin="changeLogin" @checkLogin="checkLogin" />
       </template>
     </modal>
-    <!-------------------------------------Login Modal End ----------------------------------------->
-
-    <!---------------------------------------Register Modal Start--------------------------------------->
-    <modal class="modal register-modal" ref="registerModal">
-      <template v-slot:header>
-        <h1 class="modal-title">Registrera</h1>
-        <p class="small">Registrera dig för att kunna se din orderhistork!</p>
-      </template>
-
-      <template v-slot:body>
-        <div class="users">
-          <label for="userName">Användarnamn</label>
-          <input name="name" type="text" v-model="userName" />
-          <label for="email">Epost</label>
-          <input name="name" type="text" v-model="email" />
-          <label for="password">Lösenord</label>
-          <input name="password" type="text" v-model="password" />
-          <!-- register button -->
-          <button
-            class="saveUser"
-            @click="
-              createUser(), !error ? $refs.registerModal.closeModal() : null
-            "
-            :class="{
-              notActive: email == '' || password == '' || userName == '',
-            }"
-            :disabled="registerIsDisabled"
-          >
-            Registrera
-          </button>
-          <!-- register button end-->
-        </div>
-      </template>
-      <template v-slot:footer>
-        <div class="user-text">
-          <p>Är du redan registrerad?</p>
-          <span
-            @click="
-              $refs.registerModal.closeModal(), $refs.loginModal.openModal()
-            "
-            >Logga in</span
-          >
-        </div>
-      </template>
-    </modal>
-    <!-------------------------------------Login Modal End ----------------------------------------->
   </div>
 </template>
 
 <script>
 import Modal from "@/components/Modal";
+import LogIn from "@/components/LogIn";
+import Regist from "@/components/Regist";
 
 export default {
   name: "Cart",
   components: {
     Modal,
+    LogIn,
+    Regist,
   },
   props: ["id"],
   data: () => ({
     selectedPizzaIndex: 0,
     checkedToppings: [],
-    userName: "",
-    email: "",
-    password: "",
     isError: false,
+    showLogIn: false,
+    showRegist: false,
+    logIn: true,
   }),
   computed: {
     cart() {
@@ -306,20 +235,6 @@ export default {
     },
     user() {
       return this.$store.state.user;
-    },
-    isDisabled() {
-      if (this.password == "" || this.email == "") {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    registerIsDisabled() {
-      if (this.password == "" || this.email == "" || this.userName == "") {
-        return true;
-      } else {
-        return false;
-      }
     },
   },
   mounted() {
@@ -343,39 +258,18 @@ export default {
       };
       this.$store.commit("addToppingsToPizza", cartInfo);
     },
-    async loginUser() {
-      await this.$store.dispatch("loginUser", {
-        email: this.email,
-        password: this.password,
-      });
-
-      //   console.log(this.user && this.user.length);
-
-      if (Object.keys(this.user).length) {
-        this.$router.push("/checkout");
-      } else {
-        this.isError = true;
-        setTimeout(() => {
-          this.isError = false;
-        }, 3000);
-      }
+    changeLogin() {
+      this.logIn = !this.logIn;
     },
-    async createUser() {
-      if (this.userName != "" && this.email != "" && this.password != "") {
-        await this.$store.dispatch("createUser", {
-          userName: this.userName,
-          email: this.email,
-          password: this.password,
-        });
-        await this.$store.dispatch("loginUser", {
-          email: this.email,
-          password: this.password,
-        });
-        this.$router.push("/checkout");
-      }
+    checkLogin() {
+      setTimeout(() => {
+        if (Object.keys(this.user).length) {
+          this.$router.push("/checkout");
+        }
+      }, 1000);
     },
     goToCheckout() {
-      this.$router.push({ name: "checkout" });
+      this.$router.push({ name: "Checkout" });
     },
   },
 };
@@ -469,65 +363,6 @@ export default {
         background: $orange;
         color: $white;
         margin: 0.5rem 0 12px;
-      }
-    }
-
-    .login-modal,
-    .register-modal {
-      h1 {
-        font-size: $font-heading-xl;
-      }
-      .users {
-        display: flex;
-        flex-direction: column;
-
-        label {
-          margin: 3px 0px 3px 3px;
-          align-self: flex-start;
-          font-size: $font-footer;
-        }
-        input {
-          background-color: $white-green;
-          border: 1px solid $white-green;
-          color: $orange;
-          font-size: $font-text-xs;
-          height: 44px;
-          border-radius: 5px;
-          margin-bottom: 5px;
-          padding-left: 8px;
-        }
-
-        .password-worng {
-          color: $red;
-        }
-        .saveUser {
-          @include common-button-mobile;
-          font-size: 28px;
-          padding: 10px 16px 8px;
-          background: $orange;
-          color: $white;
-          margin: 32px 0 12px;
-        }
-
-        .notActive {
-          background: gray;
-        }
-      }
-      .user-text {
-        display: flex;
-        flex-direction: row;
-        font-size: $font-text-xs * 0.9;
-        justify-content: center;
-        align-items: center;
-        margin-top: 10px;
-        p {
-          $color: $dark-green;
-        }
-        span {
-          margin-left: 10px;
-          color: $orange;
-          text-decoration: underline;
-        }
       }
     }
 

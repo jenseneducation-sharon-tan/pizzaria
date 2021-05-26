@@ -196,6 +196,9 @@ export default new Vuex.Store({
       if (response.data.error) {
         console.log(response.data.error);
         state.loginError = response.data.error;
+        setTimeout(() => {
+          state.loginError = false;
+        }, 2000);
       } else {
         commit("setUser", response.data);
       }

@@ -12,6 +12,7 @@ $dark-green: #4a7348;
 $white-green: #e4ecd8;
 $yellow: #f9db3a;
 $black: #1b1b1b;
+$gray: gray;
 
 //breakpoint
 $breakpoint-mobile: 425px !default;
@@ -56,6 +57,11 @@ $font-heading-xs: 2rem; //32px
 
 ul {
   list-style: none;
+}
+
+input[type="text"] {
+  padding-left: 0.5rem;
+  font-size: 1rem;
 }
 
 // checkbox

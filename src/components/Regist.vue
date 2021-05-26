@@ -9,7 +9,9 @@
       <input name="name" type="text" v-model="email" />
       <label for="password">Lösenord</label>
       <input name="password" type="text" v-model="password" />
-      <button class="saveUser" @click="createUser()">Registrera</button>
+      <button class="saveUser" @click="createUser(), $emit('checkLogin')">
+        Registrera
+      </button>
     </div>
     <div class="user-text">
       <p>Är du redan registrerad?</p>
