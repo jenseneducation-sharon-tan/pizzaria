@@ -3,19 +3,20 @@
    
     <div class="item-row">
         <div class="item-title">
-          {{ item.title }}
+          <span>{{ item.title }}</span>
         </div>
-		<div class="item-price">{{ item.price }} kr</div>
+		<div class="item-price">
+			<span>{{ item.price }} kr</span></div>
         <div class="item-description">
-          {{ item.desc }}
-        </div>
+			<span>{{ item.desc }}</span>
+		</div>
 		<div class="edit">
-          <p class="edit">Redigera</p>
+          <span class="edit">Redigera</span>
         </div>
 		<div class="delete">
-        <p class="edit">Ta bort</p>
+        <span class="delete">Ta bort</span>
         </div>
-    </div>
+	</div>
   </div>
 </template>
 
@@ -25,6 +26,9 @@ export default {
     item: Object,
   },
   methods: {
+	/* removeQuantity(index) {
+      this.$store.commit("removeQuantity", index);
+    }, */
     
   },
 };
@@ -41,8 +45,9 @@ export default {
   .item-details {
     display: flex;
     border-bottom: $light-green solid 1px;
-    margin: 20px 20px;
+    margin: 20px 0 20px 20px;
 	font-size: $font-text-xs;
+	width: 100%;
    
 	.heading {
 			display: flex;
@@ -52,33 +57,36 @@ export default {
    
     .item-row {
 		display: flex;
-		width: 100%;
 		flex-direction: row;
 		justify-content: space-around;
 		text-align: left; 
-		
-		
+		width: 100%;	
 
         .item-title {
         width:100px; 
         margin-bottom: 5px;
-		padding-right: 20px;
+		/* padding-right: 20px; */
 		text-align: left;
         }
 
         .item-description {
         text-align: left;
         margin-bottom: 20px;
-		width:400px; 
+		width:400px;
 		padding-right: 20px;
         }
 
       .item-price {
-		width:100px; 
+		width:100px;
         text-align: left;
         margin-top: 3px;
 		}
 	.edit {
+		width:100px; 
+		text-align: left;
+		color: $orange;
+		}
+	.delete {
 		width:100px; 
 		text-align: left;
 		color: $orange;
