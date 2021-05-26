@@ -11,9 +11,19 @@ const { v4: uuidv4 } = require("uuid");
 
 router.post("/", (req, res) => {
   const orderInfo = { ...req.body, orderNr: generateOrderNr() };
+  console.log(orderInfo);
   const orders = db.get("orders");
-  const orderRes = { eta: generateETA(), ...orderInfo };
-  orders.push(orderInfo).write();
+  const totalPrice = orderInfo.cart
+    .map((p) => p.price)
+    .reduce((total, pizzaPrice) => total + pizzaPrice);
+  const date = new Date().toISOString().split("T")[0];
+  const orderRes = {
+    time: date,
+    total: totalPrice,
+    eta: generateETA(),
+    ...orderInfo,
+  };
+  orders.push(orderRes).write();
   setTimeout(() => {
     res.send(orderRes);
   }, 2000);

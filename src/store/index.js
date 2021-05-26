@@ -31,8 +31,6 @@ export default new Vuex.Store({
     //add toppings to one pizza
     addToppingsToPizza(state, cartInfo) {
       state.cart[cartInfo.pizzaIndex].toppings = cartInfo.toppings;
-      // state.cart.find((i) => i.id === cartInfo.pizza.id).toppings =
-      //   cartInfo.toppings;
     },
     addQuantity(state, index) {
       // let index = state.cart.findIndex((item) => item.id === id);
@@ -205,7 +203,9 @@ export default new Vuex.Store({
     },
     //alla orders för en user
     async fetchOrders({ commit, state }) {
-      const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
+      const res = await axios.get(
+        `http://localhost:5000/orders/${state.user.id}`
+      );
       commit("setOrders", res.data);
     },
     addItem(context, item) {

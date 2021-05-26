@@ -16,13 +16,13 @@
     <div class="user-history">
       <h2>Din orderhistork</h2>
       <ul>
-        <li class="old-orders">
+        <li class="old-orders" v-for="order in orders" :key="order.orderNumber">
           <div>
-            Id: <span>{{ "122333" }}</span>
+            Id: <span>{{ order.orderNr }}</span>
           </div>
-          <div>{{ "2021-5-21" }}</div>
+          <div>{{ order.time }}</div>
           <div>
-            Summa: <span>{{ "200" }} kr</span>
+            Summa: <span>{{ order.total }} kr</span>
           </div>
         </li>
       </ul>
@@ -37,12 +37,19 @@ export default {
     email: "",
     address: "",
     telephoneNumber: "",
+    userId: "",
+    orders: [],
   }),
-  mounted() {
+  async mounted() {
     this.userName = this.$store.state.user["userName"];
     this.address = this.$store.state.user["address"];
     this.email = this.$store.state.user["email"];
     this.telephoneNumber = this.$store.state.user["telephoneNumber"];
+    this.userId = this.$store.state.user["id"];
+    if (this.userId) {
+      await this.$store.dispatch("fetchOrders");
+      this.orders = this.$store.state.orders;
+    }
   },
   methods: {
     async UpdateUser() {
