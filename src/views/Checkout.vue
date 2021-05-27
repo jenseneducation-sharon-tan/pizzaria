@@ -227,14 +227,11 @@ export default {
   data: () => ({
     leverans: ["Avhämtning", "Leverera hem"],
     paymentMethod: ["Swish", "Kort"],
-
     checkedLeveransMethod: "",
     checkedPaymentMethod: "",
-
     name: null,
     adress: null,
     telefon: null,
-
     cardnumber: null,
     validYear: null,
     validMonth: null,
@@ -271,6 +268,8 @@ export default {
         (this.checkedPaymentMethod == "Kort" && !this.cvc)
       ) {
         return true;
+      } else if (!this.cart.length) {
+        return true;
       } else {
         return false;
       }
@@ -287,10 +286,17 @@ export default {
       }
     },
     pay() {
-      // if () {
-      //   this.$store.commit("setDelivery", this.checkedLeveransMethod = 'Avhämtning' ? false : true);
-      //   this.$store.dispatch("postOrder");
-      // }
+      this.$store.commit(
+        "setDelivery",
+        this.checkedLeveransMethod == "Avhämtning" ? false : true
+      );
+      let userInfo = {
+        name: this.name,
+        adress: this.adress,
+        telefon: this.telefon,
+      };
+      this.$store.dispatch("postOrder", userInfo);
+      this.$router.push("/thankyou");
     },
   },
 };
