@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
-import Admin from "../views/Admin.vue";
 import AdminPizza from "../views/AdminPizza.vue";
 import Nav from "../components/Nav.vue";
 import NavAdmin from "../components/NavAdmin.vue";
@@ -11,6 +10,7 @@ import Menu from "../views/Menu.vue";
 import Profile from "../views/Profile.vue";
 import ThankYou from "../views/ThankYou.vue";
 import Checkout from "../views/Checkout.vue";
+import AdminLogIn from "../views/AdminLogIn.vue";
 
 Vue.use(VueRouter);
 
@@ -70,9 +70,9 @@ const routes = [
   },
   {
     path: "/admin",
-    name: "Admin",
+    name: "AdminLogIn",
     components: {
-      default: Admin,
+      default: AdminLogIn,
     },
   },
   {

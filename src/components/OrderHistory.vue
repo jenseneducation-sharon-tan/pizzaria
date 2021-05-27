@@ -121,7 +121,7 @@ export default {
     .old-orders {
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
       color: $white;
       border-bottom: 1px solid $white-green;
       font-size: $font-footer;
