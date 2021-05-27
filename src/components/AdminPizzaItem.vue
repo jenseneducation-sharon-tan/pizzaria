@@ -13,7 +13,7 @@
 		<div class="edit">
           <span class="edit">Redigera</span>
         </div>
-		<div class="delete">
+		<div class="delete"  v-on:click="removePizza">
         <span class="delete">Ta bort</span>
         </div>
 	</div>
@@ -26,9 +26,10 @@ export default {
     item: Object,
   },
   methods: {
-	/* removeQuantity(index) {
-      this.$store.commit("removeQuantity", index);
-    }, */
+	removePizza(id) {
+			console.log(id);
+			this.$store.commit("removePizza", id);
+			},
     
   },
 };
