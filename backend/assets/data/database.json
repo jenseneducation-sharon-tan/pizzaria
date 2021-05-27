@@ -1,12 +1,6 @@
 {
   "menu": [
     {
-      "id": 4,
-      "title": "Capricciosa",
-      "desc": "Tomatsås, Ost, Skinka, Champinjoner",
-      "price": 124
-    },
-    {
       "id": 5,
       "title": "Hawaii",
       "desc": "Tomatsås, Ost, Skinka, Ananas",
