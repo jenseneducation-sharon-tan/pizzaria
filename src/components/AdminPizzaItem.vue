@@ -1,22 +1,22 @@
 <template>
   <div class="item-details">
-   
     <div class="item-row">
-        <div class="item-title">
-          <span>{{ item.title }}</span>
-        </div>
-		<div class="item-price">
-			<span>{{ item.price }} kr</span></div>
-        <div class="item-description">
-			<span>{{ item.desc }}</span>
-		</div>
-		<div class="edit">
-          <span class="edit">Redigera</span>
-        </div>
-		<div class="delete"  v-on:click="removePizza">
+      <div class="item-title">
+        <span>{{ item.title }}</span>
+      </div>
+      <div class="item-price">
+        <span>{{ item.price }} kr</span>
+      </div>
+      <div class="item-description">
+        <span>{{ item.desc }}</span>
+      </div>
+      <div class="edit">
+        <span class="edit">Redigera</span>
+      </div>
+      <div class="delete" v-on:click="removePizza()">
         <span class="delete">Ta bort</span>
-        </div>
-	</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,11 +26,9 @@ export default {
     item: Object,
   },
   methods: {
-	removePizza(id) {
-			console.log(id);
-			this .$store.dispatch("removePizza", {id});
-			},
-    
+    removePizza() {
+      this.$store.dispatch("removePizza", { id: this.item.id });
+    },
   },
 };
 </script>
@@ -47,51 +45,51 @@ export default {
     display: flex;
     border-bottom: $light-green solid 1px;
     margin: 20px 0 20px 20px;
-	font-size: $font-text-xs;
-	width: 100%;
-   
-	.heading {
-			display: flex;
-			flex-direction: row;
-			border-bottom: $light-green solid 1px;
-			}
-   
+    font-size: $font-text-xs;
+    width: 100%;
+
+    .heading {
+      display: flex;
+      flex-direction: row;
+      border-bottom: $light-green solid 1px;
+    }
+
     .item-row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		text-align: left; 
-		width: 100%;	
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      text-align: left;
+      width: 100%;
 
-        .item-title {
-        width:100px; 
+      .item-title {
+        width: 100px;
         margin-bottom: 5px;
-		/* padding-right: 20px; */
-		text-align: left;
-        }
+        /* padding-right: 20px; */
+        text-align: left;
+      }
 
-        .item-description {
+      .item-description {
         text-align: left;
         margin-bottom: 20px;
-		width:400px;
-		padding-right: 20px;
-        }
+        width: 400px;
+        padding-right: 20px;
+      }
 
       .item-price {
-		width:100px;
+        width: 100px;
         text-align: left;
         margin-top: 3px;
-		}
-	.edit {
-		width:100px; 
-		text-align: left;
-		color: $orange;
-		}
-	.delete {
-		width:100px; 
-		text-align: left;
-		color: $orange;
-		}
+      }
+      .edit {
+        width: 100px;
+        text-align: left;
+        color: $orange;
+      }
+      .delete {
+        width: 100px;
+        text-align: left;
+        color: $orange;
+      }
     }
   }
 }
