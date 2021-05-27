@@ -1,6 +1,6 @@
 <template>
   <div class="OrderHistory">
-    <div class="small">Logga ut</div>
+    <div class="small" @click="logout">Logga ut</div>
     <img class="pic" src="@/assets/person.svg" alt="user" />
     <div class="users">
       <label for="userName">Namn</label>
@@ -60,6 +60,10 @@ export default {
         telephoneNumber: this.telephoneNumber,
       });
     },
+    async logout() {
+      await this.$store.dispatch("logoutUser");
+      //this.$router.push("/profile");
+    },
   },
 };
 </script>
@@ -112,6 +116,7 @@ export default {
     }
   }
   .user-history {
+    width: 70%;
     h2 {
       color: $white;
       font-size: $font-heading-md;
@@ -125,6 +130,7 @@ export default {
       color: $white;
       border-bottom: 1px solid $white-green;
       font-size: $font-footer;
+      margin-bottom: 10px;
     }
   }
 }

@@ -49,6 +49,7 @@ export default new Vuex.Store({
     setOrders: (state, data) => (state.orders = data),
 
     removeAdminUser: (state) => (state.adminUser = {}),
+    removeUser: (state) => (state.user = {}),
 
     //tomt cart after man beställt
     emptyCart(state) {
@@ -221,6 +222,9 @@ export default new Vuex.Store({
     },
     async logoutAdmin({ commit }) {
       commit("removeAdminUser");
+    },
+    async logoutUser({ commit }) {
+      commit("removeUser");
     },
     //alla orders för en user
     async fetchOrders({ commit, state }) {

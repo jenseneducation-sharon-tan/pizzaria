@@ -20,7 +20,7 @@ export default {
   }),
   computed: {
     loggedIn() {
-      return this.$store.state.user && this.$store.state.user.id != undefined;
+      return this.$store.state.user && this.$store.state.user.id;
     },
   },
   methods: {
