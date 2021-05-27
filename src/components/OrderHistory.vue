@@ -1,6 +1,6 @@
 <template>
   <div class="OrderHistory">
-    <div class="small" @click="logout">Logga ut</div>
+    <div class="small" @click="logout" id="logOutLink">Logga ut</div>
     <img class="pic" src="@/assets/person.svg" alt="user" />
     <div class="users">
       <label for="userName">Namn</label>
@@ -16,7 +16,7 @@
     <div class="user-history">
       <h2>Din orderhistork</h2>
       <ul>
-        <li class="old-orders" v-for="order in orders" :key="order.orderNumber">
+        <li class="oldOrders" v-for="order in orders" :key="order.orderNr">
           <div>
             Id: <span>{{ order.orderNr }}</span>
           </div>
@@ -40,7 +40,7 @@ export default {
     userId: "",
     orders: [],
   }),
-  async mounted() {
+  async created() {
     this.userName = this.$store.state.user["userName"];
     this.address = this.$store.state.user["address"];
     this.email = this.$store.state.user["email"];
@@ -62,7 +62,6 @@ export default {
     },
     async logout() {
       await this.$store.dispatch("logoutUser");
-      //this.$router.push("/profile");
     },
   },
 };
@@ -123,7 +122,7 @@ export default {
       margin: 20px 0px;
       border-bottom: 1px solid $white-green;
     }
-    .old-orders {
+    .oldOrders {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
