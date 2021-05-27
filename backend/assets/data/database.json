@@ -53,6 +53,12 @@
       "title": "Bacon",
       "desc": "Tomatsås, Ost, Bacon, Lök",
       "price": 138
+    },
+    {
+      "id": 10,
+      "title": "Vegan exotica",
+      "price": "120kr",
+      "desc": "Ost, olive"
     }
   ],
   "toppings": [
