@@ -51,4 +51,18 @@ router.post("/updateTopping", (req, res) => {
     .write();
   res.send(toppings.value());
 });
+router.post("/logIn", (req, res) => {
+  const admin = req.body;
+  const users = db.get("adminUsers");
+  const existingUser = users.find({ username: admin.username }).value();
+  if (existingUser) {
+    if (existingUser.password === admin.password) {
+      res.send(existingUser);
+    } else {
+      res.send({ error: "Ojojoj!!! Fel lösenord!" });
+    }
+  } else {
+    res.send({ error: "Hoppsan! Användaren finns inte!" });
+  }
+});
 module.exports = router;

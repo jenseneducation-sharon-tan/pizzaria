@@ -26,7 +26,7 @@ export default {
     password: "",
   }),
   computed: {
-    error: function() {
+    error: function () {
       return this.$store.state.loginError;
     },
   },

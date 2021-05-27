@@ -20,6 +20,7 @@ export default new Vuex.Store({
     newPizza: {},
     newTopping: {},
     loginError: "",
+    adminUser: {},
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
@@ -31,8 +32,6 @@ export default new Vuex.Store({
     //add toppings to one pizza
     addToppingsToPizza(state, cartInfo) {
       state.cart[cartInfo.pizzaIndex].toppings = cartInfo.toppings;
-      // state.cart.find((i) => i.id === cartInfo.pizza.id).toppings =
-      //   cartInfo.toppings;
     },
     addQuantity(state, index) {
       // let index = state.cart.findIndex((item) => item.id === id);
@@ -49,12 +48,16 @@ export default new Vuex.Store({
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
 
+    removeAdminUser: (state) => (state.adminUser = {}),
+    removeUser: (state) => (state.user = {}),
+
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
     },
 
     setUser: (state, data) => (state.user = data),
+    setadminUser: (state, data) => (state.adminUser = data),
     addToCart(state, item) {
       state.cart.push({
         cartItemId: state.cart.length ? state.cart.length + 1 : 1,
@@ -91,7 +94,7 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
     // for admin page
-    async createPizza({ commit, state }) {
+    async createPizza({ commit, state }, newPizza) {
       let id = 0;
       state.menu.forEach((pizza) => {
         if (pizza.id >= id) {
@@ -100,7 +103,7 @@ export default new Vuex.Store({
       });
       const body = {
         id: id,
-        ...state.newPizza,
+        ...newPizza,
       };
       const response = await axios.post(
         "http://localhost:5000/admin/createPizza",
@@ -203,9 +206,31 @@ export default new Vuex.Store({
         commit("setUser", response.data);
       }
     },
+    async loginAdmin({ commit, state }, body) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/logIn",
+        body
+      );
+      if (response.data.error) {
+        state.loginError = response.data.error;
+        setTimeout(() => {
+          state.loginError = false;
+        }, 5000);
+      } else {
+        commit("setadminUser", response.data);
+      }
+    },
+    async logoutAdmin({ commit }) {
+      commit("removeAdminUser");
+    },
+    async logoutUser({ commit }) {
+      commit("removeUser");
+    },
     //alla orders för en user
     async fetchOrders({ commit, state }) {
-      const res = await axios.get(`http://localhost:5000/orders/${state.uuid}`);
+      const res = await axios.get(
+        `http://localhost:5000/orders/${state.user.id}`
+      );
       commit("setOrders", res.data);
     },
     addItem(context, item) {
