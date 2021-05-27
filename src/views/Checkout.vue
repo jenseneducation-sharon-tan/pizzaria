@@ -92,7 +92,7 @@
           <label
             v-if="
               checkedLeveransMethod == 'Avhämtning' ||
-                checkedLeveransMethod == 'Leverera hem'
+              checkedLeveransMethod == 'Leverera hem'
             "
             for="name"
             >Namn</label
@@ -100,7 +100,7 @@
           <input
             v-if="
               checkedLeveransMethod == 'Avhämtning' ||
-                checkedLeveransMethod == 'Leverera hem'
+              checkedLeveransMethod == 'Leverera hem'
             "
             name="name"
             type="text"
@@ -292,8 +292,8 @@ export default {
       );
       let userInfo = {
         name: this.name,
-        adress: this.adress,
-        telefon: this.telefon,
+        address: this.adress,
+        telephoneNumber: this.telefon,
       };
       this.$store.dispatch("postOrder", userInfo);
       this.$router.push("/thankyou");

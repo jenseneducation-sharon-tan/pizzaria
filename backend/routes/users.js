@@ -29,7 +29,7 @@ router.post("/update", (req, res) => {
   const userInfo = req.body;
   const users = db.get("users");
   const existingUser = users.find({ id: userInfo.id });
-  existingUser.assign({ ...existingUser, ...userInfo }).write();
+  existingUser.assign({ ...existingUser.value(), ...userInfo }).write();
   res.send(userInfo);
 });
 

@@ -11,6 +11,9 @@
       <input name="adress" type="text" v-model="address" class="address" />
       <label for="telephoneNumber">Telephonnummer</label>
       <input name="telephoneNumber" type="text" v-model="telephoneNumber" />
+      <span class="uppdatedeInfo" v-if="uppdatedeInfo"
+        >Yes! Uppdatering Lyckades!</span
+      >
       <button class="saveUser" @click="UpdateUser()">Spara</button>
     </div>
     <div class="user-history">
@@ -39,14 +42,15 @@ export default {
     telephoneNumber: "",
     userId: "",
     orders: [],
+    uppdatedeInfo: false,
   }),
   async created() {
     this.userName = this.$store.state.user["userName"];
     this.address = this.$store.state.user["address"];
     this.email = this.$store.state.user["email"];
     this.telephoneNumber = this.$store.state.user["telephoneNumber"];
-    this.userId = this.$store.state.user["id"];
-    if (this.userId) {
+    this.id = this.$store.state.user["id"];
+    if (this.id) {
       await this.$store.dispatch("fetchOrders");
       this.orders = this.$store.state.orders;
     }
@@ -54,11 +58,14 @@ export default {
   methods: {
     async UpdateUser() {
       await this.$store.dispatch("updateUser", {
+        id: this.id,
         userName: this.userName,
         email: this.email,
         address: this.address,
         telephoneNumber: this.telephoneNumber,
       });
+      this.uppdatedeInfo = true;
+      setTimeout(() => (this.uppdatedeInfo = false), 5000);
     },
     async logout() {
       await this.$store.dispatch("logoutUser");
@@ -104,6 +111,11 @@ export default {
     }
     .address {
       height: 88px;
+    }
+    .uppdatedeInfo {
+      margin-top: 10px;
+      font-size: $font-text-xs;
+      color: $orange;
     }
     .saveUser {
       @include common-button-mobile;

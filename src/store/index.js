@@ -9,7 +9,7 @@ export default new Vuex.Store({
     menu: [],
     toppings: [],
     cart: [],
-    orderInfo: { eta: 10, orderNr: 12343242343 },
+    orderInfo: {},
     isLoading: true,
     user: {},
     orders: [],
@@ -162,11 +162,21 @@ export default new Vuex.Store({
 
     async postOrder({ commit, state }, userInfo) {
       const body = {
-        userId: state.user,
+        userId: Object.keys(state.user).length > 0 && state.user.id,
         cart: state.cart,
         delivery: state.delivery,
         userInfo: userInfo,
       };
+      if (body.userId) {
+        const userResponse = await axios.post(
+          "http://localhost:5000/users/update",
+          {
+            id: body.userId,
+            ...userInfo,
+          }
+        );
+        commit("setUser", userResponse);
+      }
       const response = await axios.post("http://localhost:5000/orders", body);
       commit("setOrder", response.data);
       commit("emptyCart");

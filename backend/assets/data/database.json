@@ -1,6 +1,30 @@
 {
   "menu": [
     {
+      "id": 1,
+      "title": "Margherita",
+      "desc": "Tomatsås, Ost, Mozzarellaost, Basilika",
+      "price": 119
+    },
+    {
+      "id": 2,
+      "title": "Vesuvio",
+      "desc": "Tomatsås, Ost, Skinka",
+      "price": 119
+    },
+    {
+      "id": 3,
+      "title": "Funghi",
+      "desc": "Tomatsås, Ost, Champinjoner",
+      "price": 119
+    },
+    {
+      "id": 4,
+      "title": "Capricciosa",
+      "desc": "Tomatsås, Ost, Skinka, Champinjoner",
+      "price": 124
+    },
+    {
       "id": 5,
       "title": "Hawaii",
       "desc": "Tomatsås, Ost, Skinka, Ananas",
@@ -160,7 +184,10 @@
       "userName": "li",
       "email": "li",
       "password": "li",
-      "id": "c1149733-8c09-42f9-8e8b-2487becec1b0"
+      "id": "c1149733-8c09-42f9-8e8b-2487becec1b0",
+      "address": "bu",
+      "telephoneNumber": "00002",
+      "name": "li"
     }
   ],
   "adminUsers": [
