@@ -12,7 +12,6 @@
         <label for="password">Lösenord</label>
         <input name="password" type="text" v-model="password" />
         <span v-if="error" id="password-worng">{{ error }} </span>
-
         <button class="saveUser" @click="loginUser()">Logga in</button>
       </div>
     </div>
