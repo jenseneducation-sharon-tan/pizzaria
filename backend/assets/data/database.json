@@ -53,9 +53,6 @@
       "title": "Bacon",
       "desc": "Tomatsås, Ost, Bacon, Lök",
       "price": 138
-    },
-    {
-      "id": 10
     }
   ],
   "toppings": [
@@ -180,84 +177,6 @@
       ],
       "userId": "7152e672-0cb2-4c29-a106-a647bffecb11",
       "orderNr": "AB4143"
-    },
-    {
-      "time": "2021-05-27",
-      "total": 250,
-      "eta": 11,
-      "delivery": true,
-      "cart": [
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 100,
-          "quantity": 1,
-          "toppings": []
-        },
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 150,
-          "quantity": 1,
-          "toppings": []
-        }
-      ],
-      "userId": "c1149733-8c09-42f9-8e8b-2487becec1b0",
-      "orderNr": "AB12101"
-    },
-    {
-      "time": "2021-05-27",
-      "total": 450,
-      "eta": 10,
-      "delivery": true,
-      "cart": [
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 100,
-          "quantity": 1,
-          "toppings": []
-        },
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 350,
-          "quantity": 2,
-          "toppings": []
-        }
-      ],
-      "userId": "c1149733-8c09-42f9-8e8b-2487becec1b0",
-      "orderNr": "AB9965"
-    },
-    {
-      "time": "2021-05-27",
-      "total": 650,
-      "eta": 15,
-      "delivery": true,
-      "cart": [
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 100,
-          "quantity": 1,
-          "toppings": []
-        },
-        {
-          "cartItemId": 1,
-          "id": 1,
-          "title": "PIZZAAA2",
-          "price": 550,
-          "quantity": 4,
-          "toppings": []
-        }
-      ],
-      "userId": "c1149733-8c09-42f9-8e8b-2487becec1b0",
-      "orderNr": "AB3451"
     }
   ],
   "users": [

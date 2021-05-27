@@ -94,7 +94,7 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
     // for admin page
-    async createPizza({ commit, state }) {
+    async createPizza({ commit, state }, newPizza) {
       let id = 0;
       state.menu.forEach((pizza) => {
         if (pizza.id >= id) {
@@ -103,7 +103,7 @@ export default new Vuex.Store({
       });
       const body = {
         id: id,
-        ...state.newPizza,
+        ...newPizza,
       };
       const response = await axios.post(
         "http://localhost:5000/admin/createPizza",
