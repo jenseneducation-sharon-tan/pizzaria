@@ -53,6 +53,9 @@
       "title": "Bacon",
       "desc": "Tomatsås, Ost, Bacon, Lök",
       "price": 138
+    },
+    {
+      "id": 10
     }
   ],
   "toppings": [
@@ -187,5 +190,11 @@
       "id": "c1149733-8c09-42f9-8e8b-2487becec1b0"
     }
   ],
-  "adminUsers": ["c1149733-8c09-42f9-8e8b-2487becec1b0"]
+  "adminUsers": [
+    {
+      "id": "hhhaha",
+      "username": "j",
+      "password": "j"
+    }
+  ]
 }

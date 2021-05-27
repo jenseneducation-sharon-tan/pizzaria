@@ -11,10 +11,9 @@
         <input name="name" type="text" v-model="name" />
         <label for="password">Lösenord</label>
         <input name="password" type="text" v-model="password" />
-        <span v-if="error" id="password-worng">Ojojoj! fel lösenord </span>
-        <button class="saveUser" @click="loginUser(), $emit('checkLogin')">
-          Logga in
-        </button>
+        <span v-if="error" id="password-worng">{{ error }} </span>
+
+        <button class="saveUser" @click="loginUser()">Logga in</button>
       </div>
     </div>
   </div>
@@ -31,12 +30,20 @@ export default {
       return this.$store.state.loginError;
     },
   },
+  created() {
+    if (Object.keys(this.$store.state.adminUser).length !== 0) {
+      this.$router.push("/admin/pizza");
+    }
+  },
   methods: {
     async loginUser() {
-      await this.$store.dispatch("loginUser", {
-        name: this.name,
+      await this.$store.dispatch("loginAdmin", {
+        username: this.name,
         password: this.password,
       });
+      if (!this.error) {
+        this.$router.push("/admin/pizza");
+      }
     },
   },
 };
@@ -55,10 +62,11 @@ export default {
     color: $white;
     display: flex;
     flex-direction: column;
+    width: 100%;
     .LogIn {
       background: $white;
       border-radius: 20px;
-      width: 80%;
+      width: 70%;
       height: 500px;
       margin: 0 auto 60px;
       padding: 1.5rem 1rem;
@@ -76,7 +84,7 @@ export default {
 
         label {
           color: $dark-green;
-          margin: 10px 0px 10px 30px;
+          margin: 5% 10% 2%;
           align-self: flex-start;
           font-size: $font-footer;
         }
@@ -88,10 +96,12 @@ export default {
           height: 44px;
           border-radius: 5px;
           margin: 0 auto 5px;
-          width: 90%;
+          width: 80%;
         }
         #password-worng {
           color: $red;
+          margin-top: 10px;
+          font-size: $font-text-md;
         }
         .saveUser {
           @include common-button-mobile;

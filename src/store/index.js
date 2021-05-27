@@ -20,6 +20,7 @@ export default new Vuex.Store({
     newPizza: {},
     newTopping: {},
     loginError: "",
+    adminUser: {},
   },
   mutations: {
     setMenu: (state, menu) => (state.menu = menu),
@@ -47,12 +48,15 @@ export default new Vuex.Store({
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
 
+    removeAdminUser: (state) => (state.adminUser = {}),
+
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
     },
 
     setUser: (state, data) => (state.user = data),
+    setadminUser: (state, data) => (state.adminUser = data),
     addToCart(state, item) {
       state.cart.push({
         cartItemId: state.cart.length ? state.cart.length + 1 : 1,
@@ -200,6 +204,23 @@ export default new Vuex.Store({
       } else {
         commit("setUser", response.data);
       }
+    },
+    async loginAdmin({ commit, state }, body) {
+      const response = await axios.post(
+        "http://localhost:5000/admin/logIn",
+        body
+      );
+      if (response.data.error) {
+        state.loginError = response.data.error;
+        setTimeout(() => {
+          state.loginError = false;
+        }, 5000);
+      } else {
+        commit("setadminUser", response.data);
+      }
+    },
+    async logoutAdmin({ commit }) {
+      commit("removeAdminUser");
     },
     //alla orders för en user
     async fetchOrders({ commit, state }) {
