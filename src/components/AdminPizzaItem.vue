@@ -28,7 +28,7 @@ export default {
   methods: {
 	removePizza(id) {
 			console.log(id);
-			this.$store.commit("removePizza", id);
+			this .$store.dispatch("removePizza", {id});
 			},
     
   },
