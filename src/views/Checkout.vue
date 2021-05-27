@@ -121,7 +121,7 @@
           <input
             v-if="checkedLeveransMethod == 'Leverera hem'"
             name="telefon"
-            type="text"
+            type="number"
             v-model="telefon"
           />
         </div>
@@ -163,14 +163,28 @@
             name="cardnumber"
             type="number"
             v-model="cardnumber"
+            maxlength="12"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <label v-if="checkedPaymentMethod == 'Kort'" for="valid"
             >Gilltigt till ( månad / år )</label
           >
           <div class="valid-info" v-if="checkedPaymentMethod == 'Kort'">
-            <input name="valid" type="number" v-model="validYear" />
+            <input
+              name="valid"
+              type="number"
+              v-model="validYear"
+              maxlength="2"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            />
             <span>/</span>
-            <input name="valid" type="number" v-model="validMonth" />
+            <input
+              name="valid"
+              type="number"
+              v-model="validMonth"
+              maxlength="2"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            />
           </div>
 
           <label v-if="checkedPaymentMethod == 'Kort'" for="cvc"
@@ -180,7 +194,9 @@
             v-if="checkedPaymentMethod == 'Kort'"
             name="cvc"
             type="number"
+            maxlength="3"
             v-model="cvc"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
         </div>
       </div>
@@ -195,10 +211,10 @@
           <span>{{ totalAmount }}kr</span>
         </div>
       </div>
-
       <button
         :disabled="payIsDisabled"
         :class="{ payIsDisabled: payIsDisabled }"
+        @click="pay()"
       >
         Betala
       </button>
@@ -213,14 +229,13 @@ export default {
     paymentMethod: ["Swish", "Kort"],
     checkedLeveransMethod: "",
     checkedPaymentMethod: "",
-    name: "",
-    adress: "",
-    telefon: "",
+    name: null,
+    adress: null,
+    telefon: null,
     cardnumber: null,
     validYear: null,
     validMonth: null,
     cvc: null,
-    payIsDisabled: true,
   }),
   computed: {
     cart() {
@@ -235,17 +250,53 @@ export default {
     user() {
       return this.$store.state.user;
     },
+    payIsDisabled() {
+      if (this.checkedLeveransMethod == "" || this.checkedPaymentMethod == "") {
+        return true;
+      } else if (this.checkedLeveransMethod == "Avhämtning" && !this.name) {
+        return true;
+      } else if (
+        (this.checkedLeveransMethod == "Leverera hem" && !this.name) ||
+        (this.checkedLeveransMethod == "Leverera hem" && !this.adress) ||
+        (this.checkedLeveransMethod == "Leverera hem" && !this.telefon)
+      ) {
+        return true;
+      } else if (
+        (this.checkedPaymentMethod == "Kort" && !this.cardnumber) ||
+        (this.checkedPaymentMethod == "Kort" && !this.validYear) ||
+        (this.checkedPaymentMethod == "Kort" && !this.validMonth) ||
+        (this.checkedPaymentMethod == "Kort" && !this.cvc)
+      ) {
+        return true;
+      } else if (!this.cart.length) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   mounted() {},
   watch: {},
   methods: {
     checkUser() {
       if (Object.keys(this.user).length) {
-        console.log(this.user);
         this.name = this.user.userName;
         this.adress = this.user.adress;
         this.telefon = this.user.telefon;
       }
+    },
+    pay() {
+      this.$store.commit(
+        "setDelivery",
+        this.checkedLeveransMethod == "Avhämtning" ? false : true
+      );
+      let userInfo = {
+        name: this.name,
+        adress: this.adress,
+        telefon: this.telefon,
+      };
+      this.$store.dispatch("postOrder", userInfo);
+      this.$router.push("/thankyou");
     },
   },
 };

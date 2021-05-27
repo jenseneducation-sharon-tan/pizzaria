@@ -47,7 +47,9 @@ export default new Vuex.Store({
     setToppings: (state, toppings) => (state.toppings = toppings),
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
-
+    setDelivery(state, method) {
+      state.delivery = method;
+    },
     removeAdminUser: (state) => (state.adminUser = {}),
     removeUser: (state) => (state.user = {}),
 
@@ -158,11 +160,12 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
 
-    async postOrder({ commit, state }) {
+    async postOrder({ commit, state }, userInfo) {
       const body = {
-        userId: state.user && state.user.id,
+        userId: state.user,
         cart: state.cart,
         delivery: state.delivery,
+        userInfo: userInfo,
       };
       const response = await axios.post("http://localhost:5000/orders", body);
       commit("setOrder", response.data);

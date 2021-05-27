@@ -134,7 +134,7 @@
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
               <div>
                 <input
-                  v-if="index <= 3"
+                  v-if="index < toppings.length / 2"
                   type="checkbox"
                   name=""
                   v-bind:id="index"
@@ -143,17 +143,21 @@
                 />
 
                 <label v-bind:for="index">
-                  <span v-if="index <= 3">{{ topping.title }}</span>
+                  <span v-if="index < toppings.length / 2">{{
+                    topping.title
+                  }}</span>
                 </label>
               </div>
-              <span v-if="index <= 3">{{ topping.price }}kr</span>
+              <span v-if="index < toppings.length / 2"
+                >{{ topping.price }}kr</span
+              >
             </li>
           </ul>
           <ul>
             <li v-for="(topping, index) in toppings" v-bind:key="topping.id">
               <div>
                 <input
-                  v-if="index >= 4"
+                  v-if="index >= toppings.length / 2"
                   type="checkbox"
                   name=""
                   v-bind:id="index"
@@ -161,10 +165,14 @@
                   v-model="checkedToppings"
                 />
                 <label v-bind:for="index">
-                  <span v-if="index >= 4">{{ topping.title }}</span>
+                  <span v-if="index >= toppings.length / 2">{{
+                    topping.title
+                  }}</span>
                 </label>
               </div>
-              <span v-if="index >= 4">{{ topping.price }}kr</span>
+              <span v-if="index >= toppings.length / 2"
+                >{{ topping.price }}kr</span
+              >
             </li>
           </ul>
         </div>
