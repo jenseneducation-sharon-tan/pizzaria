@@ -26,15 +26,10 @@
             name="title"
             type="text"
             placeholder="Ingredients eg. Paprika"
-            v-model="item.title"
+            v-model="title"
           />
           <label for="price">Pris</label>
-          <input
-            name="price"
-            type="number"
-            placeholder="119"
-            v-model="item.price"
-          />
+          <input name="price" type="number" placeholder="119" v-model="price" />
         </div>
       </template>
       <template v-slot:footer>
@@ -68,15 +63,15 @@ export default {
     },
     async updateTopping() {
       await this.$store.dispatch("updateTopping", {
-        id: this.item.id,
         title: this.title,
         price: this.price,
+        id: this.item.id,
       });
     },
-    created() {
-      this.title = this.item.title;
-      this.price = this.item.price;
-    },
+  },
+  created() {
+    this.title = this.item.title;
+    this.price = this.item.price;
   },
 };
 </script>
