@@ -9,7 +9,7 @@ export default new Vuex.Store({
     menu: [],
     toppings: [],
     cart: [],
-    orderInfo: { eta: 10, orderNr: 12343242343 },
+    orderInfo: {},
     isLoading: true,
     user: {},
     orders: [],
@@ -47,7 +47,9 @@ export default new Vuex.Store({
     setToppings: (state, toppings) => (state.toppings = toppings),
     setOrder: (state, data) => (state.orderInfo = data),
     setOrders: (state, data) => (state.orders = data),
-
+    setDelivery(state, method) {
+      state.delivery = method;
+    },
     removeAdminUser: (state) => (state.adminUser = {}),
     removeUser: (state) => (state.user = {}),
     //tomt cart after man beställt
@@ -143,12 +145,23 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
 
-    async postOrder({ commit, state }) {
+    async postOrder({ commit, state }, userInfo) {
       const body = {
-        userId: state.user && state.user.id,
+        userId: Object.keys(state.user).length > 0 && state.user.id,
         cart: state.cart,
         delivery: state.delivery,
+        userInfo: userInfo,
       };
+      if (body.userId) {
+        const userResponse = await axios.post(
+          "http://localhost:5000/users/update",
+          {
+            id: body.userId,
+            ...userInfo,
+          }
+        );
+        commit("setUser", userResponse);
+      }
       const response = await axios.post("http://localhost:5000/orders", body);
       commit("setOrder", response.data);
       commit("emptyCart");

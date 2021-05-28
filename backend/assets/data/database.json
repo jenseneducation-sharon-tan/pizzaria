@@ -184,7 +184,10 @@
       "userName": "li",
       "email": "li",
       "password": "li",
-      "id": "c1149733-8c09-42f9-8e8b-2487becec1b0"
+      "id": "c1149733-8c09-42f9-8e8b-2487becec1b0",
+      "address": "bu",
+      "telephoneNumber": "00002",
+      "name": "li"
     }
   ],
   "adminUsers": [

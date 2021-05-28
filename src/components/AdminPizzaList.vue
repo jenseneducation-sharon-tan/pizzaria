@@ -1,17 +1,5 @@
 <template>
   <div class="pizza-list">
-    <!-- <div class="heading">
-		<div class="name">
-			<p>Namn</p>
-		</div>
-		<div class="price">
-			<p>Pris</p>
-		</div>
-		<div class="description">
-			<p>Ingrediendser</p>
-		</div>
-		</div> -->
-    <hr />
     <ul class="menu-list">
       <li v-for="item in menu" :key="item.id" class="menu-item">
         <AdminPizzaItem :item="item" />
@@ -56,7 +44,6 @@ export default {
     }
     hr {
       border: 1px solid $light-green;
-      margin: 15px;
     }
     .heading {
       display: flex;
