@@ -39,6 +39,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main";
 
+/* .about{
+	display: none;
+	} */
+
 @media screen and (max-width: $breakpoint-mobile) {
   .about {
     background-image: url("../assets/bg-2.jpg");
