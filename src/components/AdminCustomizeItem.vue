@@ -7,7 +7,6 @@
       <div class="item-price">
         <span>{{ item.price }} kr</span>
       </div>
-      <!--  <div class="edit" @click="emitID(item.id)"> -->
       <div class="edit" @click="$refs.editModal.openModal()">
         <span class="edit">Redigera</span>
       </div>
@@ -15,12 +14,11 @@
         <span class="delete">Ta bort</span>
       </div>
     </div>
-    <!-- create-pizza modal -->
+    <!-- create-topping modal -->
     <modal class="modal create-topping-modal" ref="editModal">
       <template v-slot:header>
-        <h1 class="modal-title">Skapa ny pålägg</h1>
+        <h1 class="modal-title">Redigera pålägg</h1>
       </template>
-
       <template v-slot:body>
         <div class="topping-detail-wrap">
           <label for="title">Namn</label>
@@ -28,10 +26,15 @@
             name="title"
             type="text"
             placeholder="Ingredients eg. Paprika"
-            v-model="title"
+            v-model="item.title"
           />
           <label for="price">Pris</label>
-          <input name="price" type="number" placeholder="119" v-model="price" />
+          <input
+            name="price"
+            type="number"
+            placeholder="119"
+            v-model="item.price"
+          />
         </div>
       </template>
       <template v-slot:footer>
@@ -45,7 +48,6 @@
         </div>
       </template>
     </modal>
-    <!-- edit-pizza modal -->
   </div>
 </template>
 
@@ -166,38 +168,38 @@ export default {
         text-align: left;
         color: $orange;
       }
+    }*/
+  .create-topping-modal {
+    h1 {
+      font-size: $font-heading-xl;
     }
-    .create-topping-modal {
-      h1 {
-        font-size: $font-heading-xl;
-      }
-      .topping-detail-wrap {
-        display: flex;
-        flex-direction: column;
+    .topping-detail-wrap {
+      display: flex;
+      flex-direction: column;
 
-        label {
-          margin: 3px 0px 3px 3px;
-          align-self: flex-start;
-          font-size: $font-footer;
+      label {
+        margin: 3px 0px 3px 3px;
+        align-self: flex-start;
+        font-size: $font-footer;
+      }
+
+      input {
+        background-color: $white-green;
+        border: 1px solid $white-green;
+        color: $dark-green;
+        font-size: $font-text-xs;
+        height: 44px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding-left: 8px;
+
+        &::placeholder {
+          font-style: italic;
+          color: $gray;
+          opacity: 0.4;
         }
 
-        input {
-          background-color: $white-green;
-          border: 1px solid $white-green;
-          color: $dark-green;
-          font-size: $font-text-xs;
-          height: 44px;
-          border-radius: 5px;
-          margin-bottom: 5px;
-          padding-left: 8px;
-
-          &::placeholder {
-            font-style: italic;
-            color: $gray;
-            opacity: 0.4;
-          }
- */
-  /* &:last-child {
+        /* &:last-child {
             height: 123px;
             padding-top: 0;
 
@@ -205,19 +207,19 @@ export default {
               position: absolute;
               padding-top: 5px;
             }
-          } 
-        }
-      }
-      .create-topping-button {
-        @include common-button-tablet;
-        font-size: 32px;
-        padding: 10px 16px 8px;
-        background: $orange;
-        color: $white;
-        margin: 0.5rem 0 12px;
-        width: 260px;
+          }
+        }*/
       }
     }
-  } */
+    .create-topping-button {
+      @include common-button-tablet;
+      font-size: 32px;
+      padding: 10px 16px 8px;
+      background: $orange;
+      color: $white;
+      margin: 0.5rem 0 12px;
+      width: 260px;
+    }
+  }
 }
 </style>
