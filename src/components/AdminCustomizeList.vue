@@ -1,31 +1,29 @@
 <template>
-  <div class="pizza-list">
-    <!-- <div class="heading">
-		<div class="name">
-			<p>Namn</p>
-		</div>
-		<div class="price">
-			<p>Pris</p>
-		</div>
-		<div class="description">
-			<p>Ingrediendser</p>
-		</div>
-		</div> -->
-    <hr />
-    <ul class="menu-list">
-      <li v-for="item in menu" :key="item.id" class="menu-item">
-        <AdminPizzaItem :item="item" />
+  <div class="toppings-list">
+    <ul class="topping-item">
+      <div class="heading">
+        <p>Namn</p>
+        <p class="price">Pris</p>
+      </div>
+      <li v-for="item in toppings" :key="item.id" class="topping-item">
+        <!--   <AdminCustomizeItem :item="item" v-on:sendID="sendID" /> -->
+        <AdminCustomizeItem :item="item" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import AdminPizzaItem from "@/components/AdminPizzaItem.vue";
+import AdminCustomizeItem from "@/components/AdminCustomizeItem.vue";
 
 export default {
-  components: { AdminPizzaItem },
-  props: ["menu"],
+  components: { AdminCustomizeItem },
+  props: ["toppings"],
+  /* methods: {
+    sendID(id) {
+      this.$emit("sendItemID", id);
+    },
+  }, */
 };
 </script>
 
@@ -33,7 +31,7 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
-  .pizza-list {
+  /* .toppings-list {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,6 +73,6 @@ export default {
         border: none;
       }
     }
-  }
+  } */
 }
 </style>

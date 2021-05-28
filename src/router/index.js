@@ -11,6 +11,7 @@ import Profile from "../views/Profile.vue";
 import ThankYou from "../views/ThankYou.vue";
 import Checkout from "../views/Checkout.vue";
 import AdminLogIn from "../views/AdminLogIn.vue";
+import AdminCustomize from "../views/AdminCustomize.vue";
 
 Vue.use(VueRouter);
 
@@ -87,7 +88,7 @@ const routes = [
     path: "/admin/customize",
     name: "AdminCustomize",
     components: {
-      // default: AdminCustomize,
+      default: AdminCustomize,
       navAdmin: NavAdmin,
     },
   },

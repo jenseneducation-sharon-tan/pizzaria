@@ -50,6 +50,13 @@ export default new Vuex.Store({
 
     removeAdminUser: (state) => (state.adminUser = {}),
     removeUser: (state) => (state.user = {}),
+    // remove topping från admin
+    removeAdminTopping(state, id) {
+      var filteredToppings = state.toppings.filter(
+        (topping) => topping.id !== id
+      );
+      state.toppings = filteredToppings;
+    },
 
     //tomt cart after man beställt
     emptyCart(state) {
@@ -111,7 +118,7 @@ export default new Vuex.Store({
       );
       commit("setMenu", response.data);
     },
-    async createTopping({ commit, state }) {
+    async createTopping({ commit, state }, newTopping) {
       let id = 0;
       state.toppings.forEach((topping) => {
         if (topping.id >= id) {
@@ -120,7 +127,7 @@ export default new Vuex.Store({
       });
       const body = {
         id: id,
-        ...state.newTopping,
+        ...newTopping,
       };
       const response = await axios.post(
         "http://localhost:5000/admin/createTopping",
@@ -142,6 +149,9 @@ export default new Vuex.Store({
         topping
       );
       commit("setToppings", response.data);
+    },
+    removeToppingItem(context, id) {
+      context.commit("removeAdminTopping", id);
     },
     async updatePizza({ commit }, pizza) {
       const response = await axios.post(
