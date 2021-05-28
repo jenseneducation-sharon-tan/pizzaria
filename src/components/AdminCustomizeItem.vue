@@ -11,7 +11,7 @@
       <div class="edit" @click="$refs.editModal.openModal()">
         <span class="edit">Redigera</span>
       </div>
-      <div class="delete" @click="removeToppingItem(item.id)">
+      <div class="delete" @click="removeTopping()">
         <span class="delete">Ta bort</span>
       </div>
     </div>
@@ -28,22 +28,17 @@
             name="title"
             type="text"
             placeholder="Ingredients eg. Paprika"
-            v-model="item.title"
+            v-model="title"
           />
           <label for="price">Pris</label>
-          <input
-            name="price"
-            type="number"
-            placeholder="119"
-            v-model="item.price"
-          />
+          <input name="price" type="number" placeholder="119" v-model="price" />
         </div>
       </template>
       <template v-slot:footer>
         <div>
           <button
             class="create-topping-button"
-            @click="$refs.editModal.closeModal(), updateTopping()"
+            @click="$refs.editModal.closeModal(), updateTopping(item.id)"
           >
             Skapa
           </button>
@@ -66,18 +61,20 @@ export default {
     price: "",
   }),
   methods: {
+    removeTopping() {
+      this.$store.dispatch("removeTopping", { id: this.item.id });
+    },
     async updateTopping() {
       await this.$store.dispatch("updateTopping", {
-        id: this.topping.id,
+        id: this.item.id,
+        title: this.title,
+        price: this.price,
       });
     },
-    removeToppingItem(id) {
-      console.log(id);
-      this.$store.dispatch("removeToppingItem", id);
+    created() {
+      this.title = this.item.title;
+      this.price = this.item.price;
     },
-    /*  emitID(id) {
-      this.$emit("sendID", id);
-    }, */
   },
 };
 </script>
