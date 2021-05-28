@@ -1,6 +1,6 @@
 <template>
   <div class="OrderHistory">
-    <div class="small" @click="logout">Logga ut</div>
+    <div class="small" @click="logout" id="logOutLink">Logga ut</div>
     <img class="pic" src="@/assets/person.svg" alt="user" />
     <div class="users">
       <label for="userName">Namn</label>
@@ -11,16 +11,19 @@
       <input name="adress" type="text" v-model="address" class="address" />
       <label for="telephoneNumber">Telephonnummer</label>
       <input name="telephoneNumber" type="text" v-model="telephoneNumber" />
+      <span class="uppdatedeInfo" v-if="uppdatedeInfo"
+        >Yes! Uppdatering Lyckades!</span
+      >
       <button class="saveUser" @click="UpdateUser()">Spara</button>
     </div>
     <div class="user-history">
       <h2>Din orderhistork</h2>
       <ul>
-        <li class="old-orders" v-for="order in orders" :key="order.orderNumber">
+        <li class="oldOrders" v-for="order in orders" :key="order.orderNr">
           <div>
             Id: <span>{{ order.orderNr }}</span>
           </div>
-          <div>{{ order.time }}</div>
+          <div>{{ order.date }}</div>
           <div>
             Summa: <span>{{ order.total }} kr</span>
           </div>
@@ -39,14 +42,15 @@ export default {
     telephoneNumber: "",
     userId: "",
     orders: [],
+    uppdatedeInfo: false,
   }),
-  async mounted() {
+  async created() {
     this.userName = this.$store.state.user["userName"];
     this.address = this.$store.state.user["address"];
     this.email = this.$store.state.user["email"];
     this.telephoneNumber = this.$store.state.user["telephoneNumber"];
-    this.userId = this.$store.state.user["id"];
-    if (this.userId) {
+    this.id = this.$store.state.user["id"];
+    if (this.id) {
       await this.$store.dispatch("fetchOrders");
       this.orders = this.$store.state.orders;
     }
@@ -54,15 +58,17 @@ export default {
   methods: {
     async UpdateUser() {
       await this.$store.dispatch("updateUser", {
+        id: this.id,
         userName: this.userName,
         email: this.email,
         address: this.address,
         telephoneNumber: this.telephoneNumber,
       });
+      this.uppdatedeInfo = true;
+      setTimeout(() => (this.uppdatedeInfo = false), 5000);
     },
     async logout() {
       await this.$store.dispatch("logoutUser");
-      //this.$router.push("/profile");
     },
   },
 };
@@ -106,6 +112,11 @@ export default {
     .address {
       height: 88px;
     }
+    .uppdatedeInfo {
+      margin-top: 10px;
+      font-size: $font-text-xs;
+      color: $orange;
+    }
     .saveUser {
       @include common-button-mobile;
       font-size: 24px;
@@ -123,7 +134,7 @@ export default {
       margin: 20px 0px;
       border-bottom: 1px solid $white-green;
     }
-    .old-orders {
+    .oldOrders {
       display: flex;
       flex-direction: row;
       justify-content: space-between;

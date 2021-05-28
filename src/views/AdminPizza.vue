@@ -14,18 +14,18 @@
         />
         <span>Skapa ny pizza</span>
       </div>
-      <!-- <div class="heading">
-		<div class="name">
-			<p>Namn</p>
+      <div class="heading">
+		<div class="item-title">
+			<span>Namn</span>
 		</div>
-		<div class="price">
-			<p>Pris</p>
+		<div class="item-price">
+			<span>Pris</span>
 		</div>
-		<div class="description">
-			<p>Ingrediendser</p>
+		<div class="item-desc">
+			<span>Ingrediendser</span>
+		</div>
 		</div>
 		<hr>
-		</div> -->
       <AdminPizzaList :menu="menu" />
     </div>
     <!-- create-pizza modal -->
@@ -121,7 +121,7 @@ export default {
     display: block;
     background: $white-green;
     height: 100vh;
-    padding: 20px 1rem;
+    padding: 20px 2rem;
     color: $dark-green;
     overflow: auto;
 
@@ -165,6 +165,37 @@ export default {
           font-size: $font-text-md;
         }
       }
+		.heading{
+			display: flex;
+			flex-direction: row;
+			color: $light-green;
+			font-size: $font-text-sm;
+			margin: 30px 0 0 20px;
+			
+
+			.item-title {
+				width: 100px;
+				margin-bottom: 5px;
+				/* padding-right: 20px; */
+				text-align: left;
+			}
+
+			.item-description {
+				text-align: left;
+				margin-bottom: 20px;
+				width: 400px;
+				padding-right: 20px;
+			}
+
+			.item-price {
+				width: 100px;
+				text-align: left;
+				margin-top: 3px;
+			}
+		}
+		hr {
+			border: 1px solid $light-green;
+			}
     }
     .create-pizza-modal {
       h1 {

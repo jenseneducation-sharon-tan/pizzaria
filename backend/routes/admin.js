@@ -65,4 +65,17 @@ router.post("/logIn", (req, res) => {
     res.send({ error: "Hoppsan! Användaren finns inte!" });
   }
 });
+
+router.post("/updateOrder", (req, res) => {
+  let { orderNr, state } = req.body;
+  const orders = db.get("orders");
+  const oldOrder = orders.find({ orderNr });
+  oldOrder.assign({ ...oldOrder.value(), state }).write();
+  res.send(oldOrder.value());
+});
+
+router.get("/allOrders", (req, res) => {
+  res.send(db.get("orders").value());
+});
+
 module.exports = router;
