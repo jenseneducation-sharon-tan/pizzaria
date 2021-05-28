@@ -10,7 +10,7 @@
         <label for="name">Användarnamn</label>
         <input name="name" type="text" v-model="name" />
         <label for="password">Lösenord</label>
-        <input name="password" type="text" v-model="password" />
+        <input name="password" type="password" v-model="password" />
         <span v-if="error" id="password-worng">{{ error }} </span>
         <button class="saveUser" @click="loginUser()">Logga in</button>
       </div>
