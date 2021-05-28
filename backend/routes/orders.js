@@ -16,9 +16,10 @@ router.post("/", (req, res) => {
   const totalPrice = orderInfo.cart
     .map((p) => p.price)
     .reduce((total, pizzaPrice) => total + pizzaPrice);
-  const date = new Date().toISOString().split("T")[0];
+  const [date, time] = new Date().toISOString().split("T");
   const orderRes = {
-    time: date,
+    date: date,
+    time: time,
     total: totalPrice,
     eta: generateETA(),
     ...orderInfo,
