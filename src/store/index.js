@@ -46,6 +46,14 @@ export default new Vuex.Store({
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
     setOrder: (state, data) => (state.orderInfo = data),
+    setOneOrder: (state, data) => {
+      state.orders = state.orders.map((order) => {
+        if (order.orderNr === data.orderNr) {
+          return data;
+        }
+        return order;
+      });
+    },
     setOrders: (state, data) => (state.orders = data),
     setDelivery(state, method) {
       state.delivery = method;
@@ -239,11 +247,28 @@ export default new Vuex.Store({
     async logoutUser({ commit }) {
       commit("removeUser");
     },
+    async updateOrder({ commit }, { orderNr, state }) {
+      //Ändra state för en order
+      const states = ["waiting", "preparing", "done"];
+      if (!states.contains(state)) {
+        console.log("State must be 'waiting', 'preparing' or 'done'");
+      }
+      let response = axios.post("http://localhost:5000/admin/updateOrder", {
+        orderNr,
+        state,
+      });
+      commit("setOneOrder", response);
+    },
     //alla orders för en user
     async fetchOrders({ commit, state }) {
       const res = await axios.get(
         `http://localhost:5000/orders/${state.user.id}`
       );
+      commit("setOrders", res.data);
+    },
+    async fetchAllOrders({ commit }) {
+      // Hämta alla orders (för admin)
+      const res = await axios.get("http/localhost:5000/allOrders");
       commit("setOrders", res.data);
     },
     addItem(context, item) {
