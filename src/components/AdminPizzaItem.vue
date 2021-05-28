@@ -10,15 +10,15 @@
       <div class="item-description">
         <span>{{ item.desc }}</span>
       </div>
-      <div class="edit"  @click="$refs.editModal.openModal()">
+      <div class="edit" @click="$refs.editModal.openModal()">
         <span class="edit">Redigera</span>
       </div>
       <div class="delete" v-on:click="removePizza()">
         <span class="delete">Ta bort</span>
       </div>
     </div>
-	<!-- editPizza model -->
-	<modal class="modal edit-pizza-modal" ref="editModal">
+    <!-- editPizza model -->
+    <modal class="modal edit-pizza-modal" ref="editModal">
       <template v-slot:header>
         <h1 class="modal-title">Redigera ny pizza</h1>
       </template>
@@ -26,22 +26,11 @@
       <template v-slot:body>
         <div class="pizza-detail-wrap">
           <label for="title">Namn</label>
-          <input
-            name="title"
-            type="text"
-            placeholder="Margherita"
-            v-model="item.title"
-          />
+          <input name="title" type="text" v-model="title" />
           <label for="price">Pris</label>
-          <input name="price" type="text" placeholder="119kr" v-model="item.price" />
+          <input name="price" type="text" v-model="price" />
           <label for="desc">Ingredienser</label>
-          <input
-            name="desc"
-            type="text"
-            placeholder="Tomatsås, Ost, Mozzarellaost, Basilika"
-            height="200"
-            v-model="item.desc"
-          />
+          <input name="desc" type="text" height="200" v-model="desc" />
         </div>
       </template>
       <template v-slot:footer>
@@ -62,12 +51,12 @@
 import Modal from "@/components/Modal";
 
 export default {
-  components: {  Modal },
+  components: { Modal },
   props: {
     item: Object,
   },
   data: () => ({
-	title: "",
+    title: "",
     price: "",
     desc: "",
   }),
@@ -76,14 +65,19 @@ export default {
     removePizza() {
       this.$store.dispatch("removePizza", { id: this.item.id });
     },
-	async updatePizza() {
+    async updatePizza() {
       await this.$store.dispatch("updatePizza", {
         title: this.title,
         price: this.price,
         desc: this.desc,
-		id: this.pizza.id
+        id: this.item.id,
       });
     },
+  },
+  created() {
+    this.title = this.item.title;
+    this.price = this.item.price;
+    this.desc = this.item.desc;
   },
 };
 </script>
@@ -146,7 +140,7 @@ export default {
         color: $orange;
       }
     }
-	.edit-pizza-modal {
+    .edit-pizza-modal {
       h1 {
         font-size: $font-heading-xl;
       }
@@ -190,7 +184,7 @@ export default {
         margin: 0.5rem 0 12px;
         width: 260px;
       }
+    }
   }
-}
 }
 </style>
