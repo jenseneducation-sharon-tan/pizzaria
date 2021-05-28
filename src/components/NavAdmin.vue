@@ -53,6 +53,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: fixed;
 
     .nav__wrap {
       width: 100%;
