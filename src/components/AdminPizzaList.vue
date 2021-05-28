@@ -1,23 +1,10 @@
 <template>
 <div class="pizza-list">
-  
-	<!-- <div class="heading">
-		<div class="name">
-			<p>Namn</p>
-		</div>
-		<div class="price">
-			<p>Pris</p>
-		</div>
-		<div class="description">
-			<p>Ingrediendser</p>
-		</div>
-		</div> -->
-		<hr>
-		<ul class="menu-list">
-    <li v-for="item in menu" :key="item.id" class="menu-item">
-      <AdminPizzaItem :item="item" />
-    </li>
-  </ul>
+	<ul class="menu-list">
+		<li v-for="item in menu" :key="item.id" class="menu-item">
+			<AdminPizzaItem :item="item" />
+		</li>
+	</ul>
 </div>
 
 </template>
@@ -37,7 +24,8 @@ export default {
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
 .pizza-list{
 	display: flex;
-	justify-content: center;align-items: center;
+	justify-content: center;
+	align-items: center;
 	width: 100%;
 }
   ul {
@@ -57,7 +45,6 @@ export default {
 	}
 	hr {
 		border: 1px solid $light-green;
-		margin:15px;
 	}
 	.heading {
 		display: flex;
