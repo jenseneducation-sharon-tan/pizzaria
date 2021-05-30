@@ -5,6 +5,7 @@
     </router-link>
     <h1>Beställningar</h1>
     <div class="order-details">
+      <NewOrderCounter />
       <ul class="tabs-1">
         <li
           v-on:click="changeTab1('1')"
@@ -44,9 +45,9 @@
 
 <script>
 import AdminOrderList from "@/components/AdminOrderList";
-
+import NewOrderCounter from "@/components/NewOrderCounter";
 export default {
-  components: { AdminOrderList },
+  components: { AdminOrderList, NewOrderCounter },
 
   data: () => ({
     tab1IsActive: "1",
@@ -106,6 +107,16 @@ export default {
       margin-top: 30px;
       flex-direction: column;
       bottom: 0;
+
+      .order-counter {
+        position: fixed;
+        left: 44%;
+        top: 145px;
+
+        @media screen and (min-width: 1023px) {
+          left: 46%;
+        }
+      }
 
       .tabs-1 {
         display: flex;

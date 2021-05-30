@@ -303,5 +303,17 @@ export default new Vuex.Store({
       });
       return numberOfItems;
     },
+    numberOfNewOrders: (state) => {
+      let newOrders = 0;
+      if (state.orders) {
+        state.orders.forEach((order) => {
+          if (!order.state || order.state == "preparing") {
+            newOrders++;
+          }
+        });
+      }
+      console.log(newOrders);
+      return newOrders;
+    },
   },
 });

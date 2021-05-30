@@ -10,11 +10,16 @@
         </li>
       </ul>
     </div>
+    <NewOrderCounter />
   </nav>
 </template>
 
 <script>
+import NewOrderCounter from "@/components/NewOrderCounter";
 export default {
+  components: {
+    NewOrderCounter,
+  },
   data: () => ({
     adminNavList: [
       {
@@ -42,6 +47,16 @@ export default {
 }
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
+  .order-counter {
+    position: fixed;
+    right: 45px;
+    bottom: 33px;
+
+    @media screen and (min-width: 1023px) {
+      right: 80px;
+    }
+  }
+
   .admin-nav {
     background: $white;
     box-shadow: 0px -4px 5px 0px rgba(0, 0, 0, 0.199);
