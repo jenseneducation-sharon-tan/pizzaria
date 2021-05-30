@@ -70,7 +70,7 @@ export default new Vuex.Store({
     setadminUser: (state, data) => (state.adminUser = data),
     addToCart(state, item) {
       state.cart.push({
-        cartItemId: state.cart.length ? state.cart.length + 1 : 1,
+        // cartItemId: state.cart.length ? state.cart.length + 1 : 1,
         id: item.id,
         title: item.title,
         price: item.price,
@@ -168,9 +168,10 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
 
-    async postOrder({ commit, state }, userInfo) {
+    async postOrder({ commit, state, getters }, userInfo) {
       const body = {
         userId: Object.keys(state.user).length > 0 && state.user.id,
+        total: getters.total,
         cart: state.cart,
         delivery: state.delivery,
         userInfo: userInfo,
@@ -250,13 +251,16 @@ export default new Vuex.Store({
     async updateOrder({ commit }, { orderNr, state }) {
       //Ändra state för en order
       const states = ["waiting", "preparing", "done"];
-      if (!states.contains(state)) {
+      if (!states.includes(state)) {
         console.log("State must be 'waiting', 'preparing' or 'done'");
       }
-      let response = axios.post("http://localhost:5000/admin/updateOrder", {
-        orderNr,
-        state,
-      });
+      let response = await axios.post(
+        "http://localhost:5000/admin/updateOrder",
+        {
+          orderNr,
+          state,
+        }
+      );
       commit("setOneOrder", response);
     },
     //alla orders för en user
@@ -268,7 +272,7 @@ export default new Vuex.Store({
     },
     async fetchAllOrders({ commit }) {
       // Hämta alla orders (för admin)
-      const res = await axios.get("http/localhost:5000/allOrders");
+      const res = await axios.get("http://localhost:5000/admin/allOrders");
       commit("setOrders", res.data);
     },
     addItem(context, item) {

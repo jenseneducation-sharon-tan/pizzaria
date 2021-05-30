@@ -75,7 +75,10 @@ router.post("/updateOrder", (req, res) => {
 });
 
 router.get("/allOrders", (req, res) => {
-  res.send(db.get("orders").value());
+  const adapter2 = new FileSync("./assets/data/database.json");
+  const db2 = low(adapter2);
+  const orders = db2.get("orders");
+  res.send(orders.value());
 });
 
 module.exports = router;
