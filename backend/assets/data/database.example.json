@@ -99,7 +99,8 @@
   ],
   "orders": [
     {
-      "time": "2021-05-26",
+      "date": "2021-05-31",
+      "time": "08:24:42.436Z",
       "total": 100,
       "eta": 13,
       "delivery": true,
@@ -117,7 +118,8 @@
       "orderNr": "ABY"
     },
     {
-      "time": "2021-05-26",
+      "date": "2021-05-31",
+      "time": "08:24:42.436Z",
       "total": 100,
       "eta": 16,
       "delivery": true,
@@ -135,7 +137,8 @@
       "orderNr": "AB6272"
     },
     {
-      "time": "2021-05-26",
+      "date": "2021-05-31",
+      "time": "08:24:42.436Z",
       "total": 100,
       "eta": 29,
       "delivery": true,
@@ -153,7 +156,8 @@
       "orderNr": "AB4338"
     },
     {
-      "time": "2021-05-26",
+      "date": "2021-05-31",
+      "time": "08:24:42.436Z",
       "total": 250,
       "eta": 20,
       "delivery": true,
