@@ -14,6 +14,7 @@
         <span class="delete">Ta bort</span>
       </div>
     </div>
+
     <!-- create-topping modal -->
     <modal class="modal create-topping-modal" ref="editModal">
       <template v-slot:header>
@@ -43,6 +44,7 @@
         </div>
       </template>
     </modal>
+    <!-- END create-topping modal -->
   </div>
 </template>
 
@@ -85,16 +87,14 @@ export default {
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
   .topping-details {
-    // display: flex;
     border-bottom: $light-green solid 1px;
     margin: 20px 0 20px 20px;
     font-size: $font-text-xs;
-    //width: 100%;
+
     .item-row {
       display: grid;
       grid-template-columns: 1fr 1fr auto auto;
       margin-bottom: 20px;
-      //justify-items: flex-start;
 
       .item-title {
         display: flex;
@@ -114,56 +114,6 @@ export default {
       }
     }
   }
-  /*  .topping-details {
-    display: flex;
-    border-bottom: $light-green solid 1px;
-    margin: 20px 0 20px 20px;
-    font-size: $font-text-xs;
-    width: 100%;
-
-    .heading {
-      display: flex;
-      flex-direction: row;
-      border-bottom: $light-green solid 1px;
-    }
-
-    .item-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      text-align: left;
-      width: 100%;
-
-      .item-title {
-        width: 100px;
-        margin-bottom: 5px;
-        /* padding-right: 20px; */
-  /*  text-align: left;
-      }
-
-      .item-description {
-        text-align: left;
-        margin-bottom: 20px;
-        width: 400px;
-        padding-right: 20px;
-      }
-
-      .item-price {
-        width: 100px;
-        text-align: left;
-        margin-top: 3px;
-      }
-      .edit {
-        width: 100px;
-        text-align: left;
-        color: $orange;
-      }
-      .delete {
-        width: 100px;
-        text-align: left;
-        color: $orange;
-      }
-    }*/
   .create-topping-modal {
     h1 {
       font-size: $font-heading-xl;
@@ -193,17 +143,6 @@ export default {
           color: $gray;
           opacity: 0.4;
         }
-
-        /* &:last-child {
-            height: 123px;
-            padding-top: 0;
-
-            &[type="text"]::placeholder {
-              position: absolute;
-              padding-top: 5px;
-            }
-          }
-        }*/
       }
     }
     .create-topping-button {

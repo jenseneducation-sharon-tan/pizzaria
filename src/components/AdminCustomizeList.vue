@@ -2,11 +2,12 @@
   <div class="toppings-list">
     <ul class="topping-item">
       <div class="heading">
-        <p>Namn</p>
-        <p class="price">Pris</p>
+        <h1>Namn</h1>
+        <h1>Pris</h1>
+        <h1 class="invisible">empty</h1>
+        <h1 class="invisible">empty</h1>
       </div>
       <li v-for="item in toppings" :key="item.id" class="topping-item">
-        <!--   <AdminCustomizeItem :item="item" v-on:sendID="sendID" /> -->
         <AdminCustomizeItem :item="item" />
       </li>
     </ul>
@@ -19,11 +20,6 @@ import AdminCustomizeItem from "@/components/AdminCustomizeItem.vue";
 export default {
   components: { AdminCustomizeItem },
   props: ["toppings"],
-  /* methods: {
-    sendID(id) {
-      this.$emit("sendItemID", id);
-    },
-  }, */
 };
 </script>
 
@@ -31,48 +27,41 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
-  /* .toppings-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  ul {
-    margin-top: 30px;
+  .topping-item {
     color: $dark-green;
-    list-style-type: none;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
 
-    li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    hr {
-      border: 1px solid $light-green;
-      margin: 15px;
-    }
     .heading {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto auto;
+      margin: 40px 0 20px 20px;
+      border-bottom: solid 1px $light-green;
 
-      .name .price .description {
-        width: 100 px;
-        text-align: left;
+      h1 {
+        font-size: $font-text-sm;
+        font-weight: 100;
+        color: $light-green;
+      }
+
+      h1:nth-child(1) {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      h1:nth-child(2) {
+        display: flex;
+      }
+      h1:nth-child(3) {
+        margin-right: 50px;
+      }
+      .invisible {
+        color: white;
       }
     }
 
-    li:last-child {
-      .item-details {
-        border: none;
-      }
+    hr {
+      margin-left: 20px;
+      background-color: #8eb94b;
     }
-  } */
+  }
 }
 </style>
