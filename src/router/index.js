@@ -12,6 +12,7 @@ import ThankYou from "../views/ThankYou.vue";
 import Checkout from "../views/Checkout.vue";
 import AdminLogIn from "../views/AdminLogIn.vue";
 import AdminCustomize from "../views/AdminCustomize.vue";
+import AdminOrders from "../views/AdminOrders.vue";
 
 Vue.use(VueRouter);
 
@@ -96,7 +97,7 @@ const routes = [
     path: "/admin/orders",
     name: "AdminOrders",
     components: {
-      // default: AdminOrders,
+      default: AdminOrders,
       navAdmin: NavAdmin,
     },
   },

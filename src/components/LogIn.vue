@@ -5,7 +5,7 @@
       <label for="email">Epost</label>
       <input name="name" type="text" v-model="email" />
       <label for="password">Lösenord</label>
-      <input name="password" type="text" v-model="password" />
+      <input name="password" type="password" v-model="password" />
       <span v-if="error" id="password-worng">Ojojoj! fel lösenord </span>
       <button class="saveUser" @click="loginUser(), $emit('checkLogin')">
         Logga in

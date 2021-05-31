@@ -23,7 +23,7 @@
           <div>
             Id: <span>{{ order.orderNr }}</span>
           </div>
-          <div>{{ order.time }}</div>
+          <div>{{ order.date }}</div>
           <div>
             Summa: <span>{{ order.total }} kr</span>
           </div>

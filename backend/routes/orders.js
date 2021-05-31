@@ -13,13 +13,14 @@ router.post("/", (req, res) => {
   const orderInfo = { ...req.body, orderNr: generateOrderNr() };
   console.log(orderInfo);
   const orders = db.get("orders");
-  const totalPrice = orderInfo.cart
-    .map((p) => p.price)
-    .reduce((total, pizzaPrice) => total + pizzaPrice);
-  const date = new Date().toISOString().split("T")[0];
+  // const totalPrice = orderInfo.cart
+  //   .map((p) => p.price)
+  //   .reduce((total, pizzaPrice) => total + pizzaPrice);
+  const [date, time] = new Date().toISOString().split("T");
   const orderRes = {
-    time: date,
-    total: totalPrice,
+    date: date,
+    time: time,
+    // total: totalPrice,
     eta: generateETA(),
     ...orderInfo,
   };

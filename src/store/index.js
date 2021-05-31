@@ -46,6 +46,14 @@ export default new Vuex.Store({
     },
     setToppings: (state, toppings) => (state.toppings = toppings),
     setOrder: (state, data) => (state.orderInfo = data),
+    setOneOrder: (state, data) => {
+      state.orders = state.orders.map((order) => {
+        if (order.orderNr === data.orderNr) {
+          return data;
+        }
+        return order;
+      });
+    },
     setOrders: (state, data) => (state.orders = data),
     setDelivery(state, method) {
       state.delivery = method;
@@ -61,7 +69,7 @@ export default new Vuex.Store({
     setadminUser: (state, data) => (state.adminUser = data),
     addToCart(state, item) {
       state.cart.push({
-        cartItemId: state.cart.length ? state.cart.length + 1 : 1,
+        // cartItemId: state.cart.length ? state.cart.length + 1 : 1,
         id: item.id,
         title: item.title,
         price: item.price,
@@ -145,9 +153,10 @@ export default new Vuex.Store({
       commit("setToppings", response.data);
     },
 
-    async postOrder({ commit, state }, userInfo) {
+    async postOrder({ commit, state, getters }, userInfo) {
       const body = {
         userId: Object.keys(state.user).length > 0 && state.user.id,
+        total: getters.total,
         cart: state.cart,
         delivery: state.delivery,
         userInfo: userInfo,
@@ -224,11 +233,31 @@ export default new Vuex.Store({
     async logoutUser({ commit }) {
       commit("removeUser");
     },
+    async updateOrder({ commit }, { orderNr, state }) {
+      //Ändra state för en order
+      const states = ["waiting", "preparing", "done"];
+      if (!states.includes(state)) {
+        console.log("State must be 'waiting', 'preparing' or 'done'");
+      }
+      let response = await axios.post(
+        "http://localhost:5000/admin/updateOrder",
+        {
+          orderNr,
+          state,
+        }
+      );
+      commit("setOneOrder", response);
+    },
     //alla orders för en user
     async fetchOrders({ commit, state }) {
       const res = await axios.get(
         `http://localhost:5000/orders/${state.user.id}`
       );
+      commit("setOrders", res.data);
+    },
+    async fetchAllOrders({ commit }) {
+      // Hämta alla orders (för admin)
+      const res = await axios.get("http://localhost:5000/admin/allOrders");
       commit("setOrders", res.data);
     },
     addItem(context, item) {
@@ -258,6 +287,18 @@ export default new Vuex.Store({
         numberOfItems += item.quantity;
       });
       return numberOfItems;
+    },
+    numberOfNewOrders: (state) => {
+      let newOrders = 0;
+      if (state.orders) {
+        state.orders.forEach((order) => {
+          if (!order.state || order.state == "preparing") {
+            newOrders++;
+          }
+        });
+      }
+      console.log(newOrders);
+      return newOrders;
     },
   },
 });

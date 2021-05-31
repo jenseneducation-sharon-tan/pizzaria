@@ -92,7 +92,7 @@
           <label
             v-if="
               checkedLeveransMethod == 'Avhämtning' ||
-              checkedLeveransMethod == 'Leverera hem'
+                checkedLeveransMethod == 'Leverera hem'
             "
             for="name"
             >Namn</label
@@ -100,7 +100,7 @@
           <input
             v-if="
               checkedLeveransMethod == 'Avhämtning' ||
-              checkedLeveransMethod == 'Leverera hem'
+                checkedLeveransMethod == 'Leverera hem'
             "
             name="name"
             type="text"
@@ -285,7 +285,7 @@ export default {
         this.telefon = this.user.telefon;
       }
     },
-    pay() {
+    async pay() {
       this.$store.commit(
         "setDelivery",
         this.checkedLeveransMethod == "Avhämtning" ? false : true
@@ -295,7 +295,8 @@ export default {
         address: this.adress,
         telephoneNumber: this.telefon,
       };
-      this.$store.dispatch("postOrder", userInfo);
+      await this.$store.dispatch("postOrder", userInfo);
+      await this.$store.dispatch("fetchAllOrders");
       this.$router.push("/thankyou");
     },
   },
