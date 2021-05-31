@@ -1,11 +1,7 @@
 const { Router } = require("express");
 const router = new Router();
 
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
-
-const adapter = new FileSync("./assets/data/database.json");
-const db = low(adapter);
+const db = require("../utils/db");
 
 const { v4: uuidv4 } = require("uuid");
 

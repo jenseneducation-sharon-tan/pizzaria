@@ -1,11 +1,7 @@
 const { Router } = require("express");
 const router = new Router();
 const fs = require("fs");
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
-
-const adapter = new FileSync("./assets/data/database.json");
-const db = low(adapter);
+const db = require("../utils/db");
 
 router.post("/createPizza", (req, res) => {
   const pizzaInfo = req.body;
@@ -75,9 +71,7 @@ router.post("/updateOrder", (req, res) => {
 });
 
 router.get("/allOrders", (req, res) => {
-  const adapter2 = new FileSync("./assets/data/database.json");
-  const db2 = low(adapter2);
-  const orders = db2.get("orders");
+  const orders = db.get("orders");
   res.send(orders.value());
 });
 
