@@ -60,7 +60,6 @@ export default new Vuex.Store({
     },
     removeAdminUser: (state) => (state.adminUser = {}),
     removeUser: (state) => (state.user = {}),
-
     //tomt cart after man beställt
     emptyCart(state) {
       state.cart = [];
@@ -78,20 +77,6 @@ export default new Vuex.Store({
         toppings: [],
       });
     },
-    // addToCart(state, item) {
-    //   if (state.cart.find((i) => i.id === item.id)) {
-    //     let index = state.cart.findIndex((i) => i.id === item.id);
-    //     state.cart[index].quantity++;
-    //   } else {
-    //     state.cart.push({
-    //       id: item.id,
-    //       title: item.title,
-    //       price: item.price,
-    //       quantity: 1,
-    //       toppings: [],
-    //     });
-    //   }
-    // },
   },
   actions: {
     async fetchMenu({ commit }) {
@@ -121,7 +106,7 @@ export default new Vuex.Store({
       );
       commit("setMenu", response.data);
     },
-    async createTopping({ commit, state }) {
+    async createTopping({ commit, state }, newTopping) {
       let id = 0;
       state.toppings.forEach((topping) => {
         if (topping.id >= id) {
@@ -130,7 +115,7 @@ export default new Vuex.Store({
       });
       const body = {
         id: id,
-        ...state.newTopping,
+        ...newTopping,
       };
       const response = await axios.post(
         "http://localhost:5000/admin/createTopping",

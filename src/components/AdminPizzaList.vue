@@ -1,12 +1,11 @@
 <template>
-<div class="pizza-list">
-	<ul class="menu-list">
-		<li v-for="item in menu" :key="item.id" class="menu-item">
-			<AdminPizzaItem :item="item" />
-		</li>
-	</ul>
-</div>
-
+  <div class="pizza-list">
+    <ul class="menu-list">
+      <li v-for="item in menu" :key="item.id" class="menu-item">
+        <AdminPizzaItem :item="item" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -22,41 +21,41 @@ export default {
 @import "@/style/main";
 
 @media screen and (max-width: $breakpoint-tablet) and (min-width: $breakpoint-mobile) {
-.pizza-list{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-}
+  .pizza-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
   ul {
     margin-top: 30px;
     color: $dark-green;
-	list-style-type: none;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 100%;
-	
-	li {
-		display: flex;
-		justify-content: center;
-		align-items: center;	
-	}
-	hr {
-		border: 1px solid $light-green;
-	}
-	.heading {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		width: 100%;
-				
-		.name .price .description{
-			width: 100 px;
-			text-align: left;
-			}
-	}
+    list-style-type: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    hr {
+      border: 1px solid $light-green;
+    }
+    .heading {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+
+      .name .price .description {
+        width: 100 px;
+        text-align: left;
+      }
+    }
 
     li:last-child {
       .item-details {
