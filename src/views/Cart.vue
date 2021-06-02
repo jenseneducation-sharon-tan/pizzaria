@@ -30,9 +30,7 @@
                       class="customize-icon"
                       src="@/assets/customize.svg"
                       alt=""
-                      @click="
-                        $refs.cartModal[0].openModal(), selectedPizza(index)
-                      "
+                      @click="$refs.cartModal.openModal(), selectedPizza(index)"
                     />
                     <span>{{ cartitem.title }}</span>
                   </div>
