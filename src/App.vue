@@ -1,18 +1,22 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-      <router-view />
+      <router-view v-show="thisIsMobileAndCustomer || thisIsTabletAndAdmin" />
     </transition>
-    <router-view name="nav" />
-    <router-view name="navAdmin" />
-    <!-- <router-view v-show="thisIsMobile" />
+
     <router-view v-show="thisIsMobile" name="nav" />
-    <router-view v-show="thisIsTablet" name="navAdmin" /> -->
-    <!-- <div class="is-not-mobile" v-show="!thisIsMobile">
+    <router-view v-show="thisIsTablet" name="navAdmin" />
+
+    <div class="textInfo" v-show="!thisIsMobileAndCustomer && urlIsApp">
       <p class="emoji">&#x1f630;</p>
       <br />
-      <p>Denna app är bara för mobil ...</p>
-    </div> -->
+      <p>Denna app är bara för mobil...</p>
+    </div>
+    <div class="textInfo" v-show="!thisIsTabletAndAdmin && urlIsAdmin">
+      <p class="emoji">&#x1f630;</p>
+      <br />
+      <p>Admnin sidan är bara för tablett...</p>
+    </div>
   </div>
 </template>
 
@@ -22,12 +26,16 @@ export default {
     transitionName: "opacity",
     //indexPage: 1,
 
-    // thisIsMobile: false,
-    // thisIsTablet: false,
+    thisIsMobile: false,
+    thisIsTablet: false,
+    thisIsTabletAndAdmin: false,
+    thisIsMobileAndCustomer: false,
+    urlIsAdmin: false,
+    urlIsApp: false,
   }),
   watch: {
     $route(to, from) {
-      if (from.path === "/menu" && to.path === "/cart") {
+      if (from.path === "/menu" && to.path === "/cart" && this.thisIsMobile) {
         this.transitionName = "ltr";
       } else {
         this.transitionName = "opacity";
@@ -35,33 +43,77 @@ export default {
       //this.indexPage++;
     },
   },
-  // created() {
-  //   window.addEventListener("resize", this.isMobile);
-  //   window.addEventListener("resize", this.isTablet);
-  // },
-  // destroyed() {
-  //   window.removeEventListener("resize", this.isMobile);
-  //   window.removeEventListener("resize", this.isTablet);
-  // },
+  created() {
+    window.addEventListener("resize", this.isMobile);
+    window.addEventListener("resize", this.isTablet);
+  },
+  mounted() {
+    this.isMobile();
+    this.isTablet();
+  },
+  Destroy() {
+    window.removeEventListener("resize", this.isMobile);
+    window.removeEventListener("resize", this.isTablet);
+  },
   methods: {
-    // isMobile() {
-    //   if (window.innerwidth || document.documentElement.clientWidth <= 425) {
-    //     this.thisIsMobile = true;
-    //   } else {
-    //     this.thisIsMobile = false;
-    //   }
-    // },
-    // isTablet() {
-    //   if (window.innerwidth || document.documentElement.clientWidth > 425) {
-    //     if (window.innerwidth || document.documentElement.clientWidth <= 1024) {
-    //       this.thisIsTablet = true;
-    //     } else {
-    //       this.thisIsTablet = false;
-    //     }
-    //   } else {
-    //     this.thisIsTablet = false;
-    //   }
-    // },
+    isMobile() {
+      if (window.innerwidth || document.documentElement.clientWidth <= 425) {
+        this.thisIsMobile = true;
+      } else {
+        this.thisIsMobile = false;
+      }
+      this.setDisplay();
+    },
+    isTablet() {
+      if (window.innerwidth || document.documentElement.clientWidth > 425) {
+        if (window.innerwidth || document.documentElement.clientWidth <= 1024) {
+          this.thisIsTablet = true;
+        } else {
+          this.thisIsTablet = false;
+        }
+      } else {
+        this.thisIsTablet = false;
+      }
+      this.setDisplay();
+    },
+    setDisplay() {
+      if (
+        this.$route.path === "/" ||
+        this.$route.path === "/about" ||
+        this.$route.path === "/menu" ||
+        this.$route.path === "/cart" ||
+        this.$route.path === "/checkout" ||
+        this.$route.path === "/thankyou" ||
+        this.$route.path === "/profile"
+      ) {
+        this.urlIsAdmin = false;
+        this.urlIsApp = true;
+        if (this.thisIsMobile) {
+          this.thisIsMobileAndCustomer = true;
+        } else {
+          this.thisIsMobileAndCustomer = false;
+        }
+      } else {
+        this.thisIsMobileAndCustomer = false;
+      }
+
+      if (
+        this.$route.path === "/admin" ||
+        this.$route.path === "/admin/pizza" ||
+        this.$route.path === "/admin/customize" ||
+        this.$route.path === "/admin/orders"
+      ) {
+        this.urlIsAdmin = true;
+        this.urlIsApp = false;
+        if (this.thisIsTablet) {
+          this.thisIsTabletAndAdmin = true;
+        } else {
+          this.thisIsTabletAndAdmin = false;
+        }
+      } else {
+        this.thisIsTabletAndAdmin = false;
+      }
+    },
   },
 };
 </script>
@@ -76,8 +128,8 @@ export default {
   text-align: center;
   // color: #2c3e50;
 
-  .is-not-mobile {
-    background-image: url("/assets/bg-1.jpg");
+  .textInfo {
+    background-image: url("assets/bg-1.jpg");
     background-repeat: repeat;
     height: 100vh;
     overflow: auto;
@@ -86,7 +138,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     display: flex;
-    font-size: $font-heading-lg;
+    font-size: $font-text-sm;
 
     .emoji {
       font-size: 80px;
