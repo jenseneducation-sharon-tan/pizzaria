@@ -297,7 +297,6 @@ export default new Vuex.Store({
           }
         });
       }
-      console.log(newOrders);
       return newOrders;
     },
   },

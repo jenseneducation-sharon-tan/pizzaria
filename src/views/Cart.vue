@@ -90,21 +90,25 @@
       </div>
 
       <button
-        v-if="Object.keys(user).length"
+        v-if="Object.keys(Object.assign({}, ...user)).length"
         class="cart-button direkt"
         @click="goToCheckout()"
       >
         Gå till kassan
       </button>
       <button
-        v-if="!Object.keys(user).length"
+        v-if="!Object.keys(Object.assign({}, ...user)).length"
         class="cart-button"
         @click="$refs.loginModal.openModal()"
       >
         Logga in och gå till kassan
       </button>
-      <p v-if="!Object.keys(user).length" class="or">or</p>
-      <a v-if="!Object.keys(user).length" href="#/checkout"
+      <p v-if="!Object.keys(Object.assign({}, ...user)).length" class="or">
+        or
+      </p>
+      <a
+        v-if="!Object.keys(Object.assign({}, ...user)).length"
+        href="#/checkout"
         >Gå till kassan som gäst</a
       >
     </main>
@@ -180,6 +184,7 @@
       <template v-slot:footer>
         <div>
           <button
+            id="toppingSaveButton"
             @click="
               $refs.cartModal.closeModal(), saveToppings(selectedPizzaIndex)
             "
