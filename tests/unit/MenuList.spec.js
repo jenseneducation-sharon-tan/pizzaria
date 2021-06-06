@@ -1,12 +1,11 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import MenuList from "@/components/MenuList.vue";
-
 import Vuex from "vuex";
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("MenuList", () => {
-  let menu;
+  let menu, actions, store;
 
   beforeEach(() => {
     menu = [
@@ -40,39 +39,22 @@ describe("MenuList", () => {
         desc: "Tomatsås, Ost, Skinka, Ananas",
         price: 124,
       },
-      {
-        id: 6,
-        title: "Banana",
-        desc: "Tomatsås, Ost, Skinka, Banan, Curry",
-        price: 124,
-      },
-      {
-        id: 7,
-        title: "Napolitana",
-        desc: "Tomatsås, Ost, Sardeller, Oliver",
-        price: 124,
-      },
-      {
-        id: 8,
-        title: "Bolognese",
-        desc: "Tomatsås, Ost, Köttfärs, Lök",
-        price: 138,
-      },
-      {
-        id: 9,
-        title: "Bacon",
-        desc: "Tomatsås, Ost, Bacon, Lök",
-        price: 138,
-      },
     ];
+
+    actions = {
+      addItem: jest.fn(),
+    };
+    store = new Vuex.Store({
+      actions,
+    });
   });
 
-  it("should show 9 items when rendering", async () => {
+  it("should show 5 items when rendering", async () => {
     const wrapper = mount(MenuList, {
       propsData: { menu },
     });
 
-    const expected = 9;
+    const expected = 5;
     const actual = wrapper.findAll(".item-details").length;
     expect(actual).toBe(expected);
   });
@@ -86,16 +68,13 @@ describe("MenuList", () => {
     expect(item.exists()).toBe(true);
   });
 
-  /*  it("triggers when clicked", async () => {
-    const wrapper = mount(MenuList, {
-      propsData: { menu },
-    });
+  it("calls store action 'addItem' when button '+' is clicked ", async () => {
+    const wrapper = mount(MenuList, { store, localVue, propsData: { menu } });
 
     const addButton = wrapper.find(".add-button");
 
-    wrapper.wm.addItem = jest.fn();
     await addButton.trigger("click");
 
-    expect(wrapper.vm.addItem).toHaveBeenCalled();
-  }); */
+    expect(actions.addItem).toHaveBeenCalled();
+  });
 });
