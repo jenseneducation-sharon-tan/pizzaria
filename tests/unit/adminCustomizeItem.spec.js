@@ -18,7 +18,7 @@ describe("AdminCustomizeItem", () => {
       },
     ];
   });
-  it("should display the name and price and description of the item", async () => {
+  it("should display the name and price of the item", async () => {
     let item = {
       id: 1,
       title: "Banana",
