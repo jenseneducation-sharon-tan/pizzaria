@@ -56,17 +56,6 @@ describe("AdminCustomizeList", () => {
     expect(actual).toBe(expected);
   });
 
-  it("renders 'Redigera' and 'Ta bort' for every topping item", () => {
-    const wrapper = mount(AdminCustomizeList, {
-      propsData: { toppings },
-    });
-    const editItem = wrapper.find(".edit");
-    const deleteItem = wrapper.find(".delete");
-
-    expect(editItem.exists()).toBe(true);
-    expect(deleteItem.exists()).toBe(true);
-  });
-
   it("calls store action 'removeTopping' when 'Ta bort' is clicked ", async () => {
     const wrapper = mount(AdminCustomizeList, {
       store,
