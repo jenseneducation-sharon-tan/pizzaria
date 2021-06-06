@@ -1,6 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-
 import MenuList from "@/components/MenuList.vue";
 
 const localVue = createLocalVue();
