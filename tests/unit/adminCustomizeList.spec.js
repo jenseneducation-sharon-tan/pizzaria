@@ -1,5 +1,6 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import AdminCustomizeList from "@/components/AdminCustomizeList.vue";
+import Modal from "@/components/Modal.vue";
 import Vuex from "vuex";
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -56,6 +57,17 @@ describe("AdminCustomizeList", () => {
     expect(actual).toBe(expected);
   });
 
+  it("renders 'Redigera' and 'Ta bort' for every topping item", () => {
+    const wrapper = mount(AdminCustomizeList, {
+      propsData: { toppings },
+    });
+    const editItem = wrapper.find(".edit");
+    const deleteItem = wrapper.find(".delete");
+
+    expect(editItem.exists()).toBe(true);
+    expect(deleteItem.exists()).toBe(true);
+  });
+
   it("calls store action 'removeTopping' when 'Ta bort' is clicked ", async () => {
     const wrapper = mount(AdminCustomizeList, {
       store,
@@ -68,5 +80,27 @@ describe("AdminCustomizeList", () => {
     await deleteItem.trigger("click");
 
     expect(actions.removeTopping).toHaveBeenCalled();
+  });
+
+  it("opens 'create-topping-model' when 'Redigera' is clicked ", async () => {
+    const wrapper = mount(AdminCustomizeList, {
+      propsData: {
+        toppings: [
+          {
+            id: 1,
+            title: "Banana",
+            price: 10,
+          },
+        ],
+      },
+    });
+
+    const editItem = wrapper.find(".edit");
+
+    const modalTopping = wrapper.find(".create-topping-modal");
+
+    await editItem.trigger("click");
+
+    expect(modalTopping.exists()).toBe(true);
   });
 });
