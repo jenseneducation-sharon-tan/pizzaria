@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "start": "node app.js"
+    "start": "node backend/app.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
