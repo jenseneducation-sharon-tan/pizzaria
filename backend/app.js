@@ -8,10 +8,11 @@ const adminRouter = require("./routes/admin");
 const PORT = process.env.PORT || 5000;
 //const bodyParser = require("body-parser");
 
-app.use(express.static("app/dist/"));
+app.use(express.static(path.join(__dirname, "./dist")));
 app.get(/.*/, function(req, res) {
-  res.sendFile("app/dist/index.html");
+  res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
+
 app.use(cors());
 app.use(express.json());
 app.use("/menu", menuRouter);
