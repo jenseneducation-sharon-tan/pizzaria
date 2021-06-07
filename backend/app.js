@@ -9,9 +9,15 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 //const bodyParser = require("body-parser");
 
+<<<<<<< HEAD
 app.use(express.static(path.join(__dirname, ".", "dist")).toString());
 app.get(/.*/, function(req, res) {
   res.sendFile(path.join(__dirname, ".", "dist", "index.html")).toString();
+=======
+app.use(express.static(path.join(__dirname, "../dist")));
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+>>>>>>> aa880adbf4be98304485b81bff4899095cdde227
 });
 
 app.use(cors());
