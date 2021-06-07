@@ -80,12 +80,16 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchMenu({ commit }) {
-      const response = await axios.get("http://localhost:5000/menu");
+      const response = await axios.get(
+        "https://eko-pizza-2021.herokuapp.com/menu"
+      );
       commit("setMenu", response.data);
     },
 
     async fetchToppings({ commit }) {
-      const response = await axios.get("http://localhost:5000/menu/toppings");
+      const response = await axios.get(
+        "https://eko-pizza-2021.herokuapp.com/menu/toppings"
+      );
       commit("setToppings", response.data);
     },
     // for admin page
@@ -101,7 +105,7 @@ export default new Vuex.Store({
         ...newPizza,
       };
       const response = await axios.post(
-        "http://localhost:5000/admin/createPizza",
+        "https://eko-pizza-2021.herokuapp.com/admin/createPizza",
         body
       );
       commit("setMenu", response.data);
@@ -118,7 +122,7 @@ export default new Vuex.Store({
         ...newTopping,
       };
       const response = await axios.post(
-        "http://localhost:5000/admin/createTopping",
+        "https://eko-pizza-2021.herokuapp.com/admin/createTopping",
         body
       );
       commit("setToppings", response.data);
@@ -126,28 +130,28 @@ export default new Vuex.Store({
     // remove pizza in admin page
     async removePizza({ commit }, pizza) {
       const response = await axios.post(
-        "http://localhost:5000/admin/removePizza",
+        "https://eko-pizza-2021.herokuapp.com/admin/removePizza",
         pizza
       );
       commit("setMenu", response.data);
     },
     async removeTopping({ commit }, topping) {
       const response = await axios.post(
-        "http://localhost:5000/admin/removeTopping",
+        "https://eko-pizza-2021.herokuapp.com/admin/removeTopping",
         topping
       );
       commit("setToppings", response.data);
     },
     async updatePizza({ commit }, pizza) {
       const response = await axios.post(
-        "http://localhost:5000/admin/updatePizza",
+        "https://eko-pizza-2021.herokuapp.com/admin/updatePizza",
         pizza
       );
       commit("setMenu", response.data);
     },
     async updateTopping({ commit }, topping) {
       const response = await axios.post(
-        "http://localhost:5000/admin/updateTopping",
+        "https://eko-pizza-2021.herokuapp.com/admin/updateTopping",
         topping
       );
       commit("setToppings", response.data);
@@ -163,7 +167,7 @@ export default new Vuex.Store({
       };
       if (body.userId) {
         const userResponse = await axios.post(
-          "http://localhost:5000/users/update",
+          "https://eko-pizza-2021.herokuapp.com/users/update",
           {
             id: body.userId,
             ...userInfo,
@@ -171,13 +175,19 @@ export default new Vuex.Store({
         );
         commit("setUser", userResponse);
       }
-      const response = await axios.post("http://localhost:5000/orders", body);
+      const response = await axios.post(
+        "https://eko-pizza-2021.herokuapp.com/orders",
+        body
+      );
       commit("setOrder", response.data);
       commit("emptyCart");
     },
     async createUser({ commit, state }, user) {
       const body = user;
-      const response = await axios.post("http://localhost:5000/users", body);
+      const response = await axios.post(
+        "https://eko-pizza-2021.herokuapp.com/users",
+        body
+      );
       if (response.data.error) {
         console.log(response.data.error);
         state.loginError = response.data.error;
@@ -188,7 +198,7 @@ export default new Vuex.Store({
     async updateUser({ commit, state }, user) {
       const body = user;
       const response = await axios.post(
-        "http://localhost:5000/users/update",
+        "https://eko-pizza-2021.herokuapp.com/users/update",
         body
       );
       if (response.data.error) {
@@ -200,7 +210,7 @@ export default new Vuex.Store({
     },
     async loginUser({ commit, state }, body) {
       const response = await axios.post(
-        "http://localhost:5000/users/logIn",
+        "https://eko-pizza-2021.herokuapp.com/users/logIn",
         body
       );
       if (response.data.error) {
@@ -215,7 +225,7 @@ export default new Vuex.Store({
     },
     async loginAdmin({ commit, state }, body) {
       const response = await axios.post(
-        "http://localhost:5000/admin/logIn",
+        "https://eko-pizza-2021.herokuapp.com/admin/logIn",
         body
       );
       if (response.data.error) {
@@ -240,7 +250,7 @@ export default new Vuex.Store({
         console.log("State must be 'waiting', 'preparing' or 'done'");
       }
       let response = await axios.post(
-        "http://localhost:5000/admin/updateOrder",
+        "https://eko-pizza-2021.herokuapp.com/admin/updateOrder",
         {
           orderNr,
           state,
@@ -251,13 +261,15 @@ export default new Vuex.Store({
     //alla orders för en user
     async fetchOrders({ commit, state }) {
       const res = await axios.get(
-        `http://localhost:5000/orders/${state.user.id}`
+        `https://eko-pizza-2021.herokuapp.com/orders/${state.user.id}`
       );
       commit("setOrders", res.data);
     },
     async fetchAllOrders({ commit }) {
       // Hämta alla orders (för admin)
-      const res = await axios.get("http://localhost:5000/admin/allOrders");
+      const res = await axios.get(
+        "https://eko-pizza-2021.herokuapp.com/admin/allOrders"
+      );
       commit("setOrders", res.data);
     },
     addItem(context, item) {
