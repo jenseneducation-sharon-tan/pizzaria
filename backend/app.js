@@ -8,9 +8,9 @@ const adminRouter = require("./routes/admin");
 const PORT = process.env.PORT || 5000;
 //const bodyParser = require("body-parser");
 
-app.use(express.static(__dirname + "./dist/"));
+app.use(express.static("/dist/"));
 app.get(/.*/, function(req, res) {
-  res.sendFile(__dirname + "./dist/index.html");
+  res.sendFile("/dist/index.html");
 });
 app.use(cors());
 app.use(express.json());
